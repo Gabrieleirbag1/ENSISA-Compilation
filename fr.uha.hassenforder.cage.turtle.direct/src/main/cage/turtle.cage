@@ -23,11 +23,14 @@ parser code {:
     }
 :}
 
-terminal 	String ID;
-terminal	Integer INTEGER;
-nonterminal 		Commandes, Definition;
+terminal 			String ID;
+terminal			Integer INTEGER;
+nonterminal			Commandes, Definition;
 nonterminal			Instruction;
-nonterminal Integer	Value;
+nonterminal 		Integer	Value, Expression;
+
+precedence left '+', '-';
+precedence left '*', '/';
 
 start with Commandes;
 
@@ -37,17 +40,25 @@ Commandes	::= Definition *
 Definition	::= Instruction:inst ';'
 			;
 
-Instruction ::=								{: :}
-			|	ID:n '=' INTEGER:view		{: parser.getTable().setValue(n, v); :}
-			|	'avancer' INTEGER:v			{: parser.getTurtle().move(v); :}
-			|	'tourner' INTEGER:v			{: parser.getTurtle().turn(v); :}
-			|	'sauter' INTEGER:x INTEGER:y {: parser.getTurtle().go(x, y); :}
-			|	'lever' 					 {: parser.getTurtle().up(); :}
-			|	'baisser'  					 {: parser.getTurtle().down(); :}
+Instruction ::=											{: :}
+			|	ID:n '=' 	Expression:v				{: parser.getTable().setValue(n, v); :}
+			|	'avancer' 	Expression:v				{: parser.getTurtle().move(v); :}
+			|	'tourner' 	Expression:v				{: parser.getTurtle().turn(v); :}
+			|	'sauter' 	Expression:x Expression:y 	{: parser.getTurtle().go(x, y); :}
+			|	'lever' 					 			{: parser.getTurtle().up(); :}
+			|	'baisser'  					 			{: parser.getTurtle().down(); :}
 			;
 
-Value		::= INTEGER:value				{: v; :}
-			|	ID:new						{: parser.getTable().getValue(n); :}
+Expression	::= Value:v						{: RESULT = v; :}
+			|	Expression:e1 '+' Expression:e2	{: RESULT = e1 + e2; :}
+			|	Expression:e1 '-' Expression:e2	{: RESULT = e1 - e2; :}
+			|	Expression:e1 '*' Expression:e2	{: RESULT = e1 * e2; :}
+			|	Expression:e1 '/' Expression:e2	{: RESULT = e1 / e2; :}
+			|	'(' Expression:e ')'			{: RESULT = e; :}
+			;
+
+Value		::= INTEGER:v					{: RESULT = v; :}
+			|	ID:n						{: RESULT = parser.getTable().getValue(n); :}
 			;
 
 INTEGER		::= `[0-9]+`
