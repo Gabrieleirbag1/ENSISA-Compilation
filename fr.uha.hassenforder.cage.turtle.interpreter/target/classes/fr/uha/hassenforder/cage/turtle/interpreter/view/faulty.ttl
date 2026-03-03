@@ -1,0 +1,88 @@
+frame 600, 400;
+
+red=255*65536;
+green=255*256;
+blue=255;
+yellow= red+green;
+magenta= red+blue;
+cyan= green+blue;
+
+plot qdoicqeliv "small square";
+repeat 4 times {
+	move 10; turn 90;
+};
+
+pen up;
+goto 100, 150;
+pen down;
+ink red;
+plot "alien sign";
+north 100;
+west 75;
+south 50;
+east 25;
+
+pen up;
+goto 500, 300;
+pen down;
+ink green;
+plot "medium square";
+move 50; turn 90;
+move 50; turn 90;
+move 50; turn 90;
+move 50; turn 90;
+
+pen up;
+goto 100, 200;
+pen down;
+ink blue;
+plot "hexagon";
+repeat 6 times {
+	move 70; turn 60;
+};
+
+pen up;
+goto 200, 100;
+pen down;
+ink blue;
+plot "octagon";
+repeat 8 times {
+	move 40; turn 45;
+};
+
+pen up;
+goto 500, 50;
+pen down;
+a=360/20; l=20;
+ink cyan;
+plot "icosagon";
+repeat 20 times {
+	move l; turn a;
+};
+
+pen up;
+goto 300, 300;
+pen down;
+ink magenta;
+plot "spiral";
+a=20; c=2; l=0; turn 180;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
+l=l+c; move l; turn a;
