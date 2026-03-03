@@ -1,0 +1,147 @@
+package fr.uha.hassenforder.cage.turtle.compiler.reader.ttl;
+
+parser import code {:
+	import fr.uha.hassenforder.cage.turtle.compiler.LogoContext;
+	import fr.uha.hassenforder.logo.factory.LogoFactory;
+	import fr.uha.hassenforder.ast.Node;
+	import fr.uha.hassenforder.ast.Symbol;
+	import fr.uha.hassenforder.ast.SymbolFunction;
+:}
+
+parser code {:
+	private LogoContext context;
+    public void setContext (LogoContext context) {
+    	this.context = context;
+    }
+
+    public LogoContext getContext () {
+		return context;
+    }
+
+	public LogoFactory getFactory () {
+		return getContext().getFactory();
+	}
+:}
+
+terminal Double		NUMBER;
+terminal String		ID, TEXT, PARAM;
+terminal 			UNARIES;
+
+nonterminal 		Commandes, Definition;
+nonterminal Symbol 	Declaration;
+nonterminal SymbolFunction	FunctionSignature;
+nonterminal Node    FunctionBody;
+nonterminal java.util.List<Node>    Bloc;
+nonterminal Node    Instruction;
+nonterminal Node    Expr;
+nonterminal Node    Params, Param;
+
+precedence left '+', '-'; 
+precedence left '*', '/'; 
+precedence right UNARIES;
+
+start with Commandes;
+
+Commandes	::= Definition *
+			;
+
+Definition	::= Declaration:decl		{: parser.getContext().addLocalSymbol (decl);:}
+			|	Instruction:inst ';'	{: parser.getContext().addGlobalInstruction(inst); :}
+			;
+
+Declaration	::= FunctionSignature:function FunctionBody:body
+					{:
+						function.setCode (body);
+						RESULT = function;
+					:}
+			;
+
+FunctionSignature ::= 'fun' ID:name '(' ')' 
+					{:
+						SymbolFunction function = parser.getFactory().createTurtleFunction(name);
+						parser.getContext().getVista().push (function.getTable());
+						RESULT = function;
+					:}
+				;
+
+FunctionBody	::=	Bloc:code
+					{:
+						parser.getContext().getVista().pop ();
+						RESULT = parser.getFactory().createNodeBloc (code);
+					:}
+			;
+
+Instruction ::=								{: RESULT = null; :}
+			| 'frame' Expr:x ',' Expr:y		{: RESULT = parser.getFactory().createTurtleFrame (x, y); :}
+			| 'home'						{: RESULT = parser.getFactory().createTurtleHome (); :}
+			| 'north' Expr:p				{: RESULT = parser.getFactory().createTurtleUp (p); :}
+			| 'south' Expr:p				{: RESULT = parser.getFactory().createTurtleDown (p); :}
+			| 'east' Expr:p					{: RESULT = parser.getFactory().createTurtleRight (p); :}
+			| 'west' Expr:p					{: RESULT = parser.getFactory().createTurtleLeft (p); :}
+			| 'pen' 'up'					{: RESULT = parser.getFactory().createTurtleOff (); :}
+			| 'pen' 'down'					{: RESULT = parser.getFactory().createTurtleOn (); :}
+			| 'goto' Expr:x ',' Expr:y		{: RESULT = parser.getFactory().createTurtleGo (x, y); :}
+//			| 'shift ' Expr:dx ',' Expr:dy	{: RESULT = parser.getFactory().createTurtleShift (dx, dy);:}
+			| 'move' Expr:d					{: RESULT = parser.getFactory().createTurtleMove (d); :}
+			| 'turn' Expr:a					{: RESULT = parser.getFactory().createTurtleTurn (a); :}
+			| 'plot' Expr:t					{: RESULT = parser.getFactory().createTurtlePlot (t); :}
+			| 'ink' Expr:i					{: RESULT = parser.getFactory().createTurtleInk (i); :}
+			| ID:id '=' Expr:v				{: RESULT = parser.getFactory().createTurtleSet (id, v); :}
+			| Bloc:b 						{: RESULT = parser.getFactory().createNodeBloc (b); :}
+			| 'repeat' Expr:count 'times'? Instruction:inst
+											{: RESULT = parser.getFactory().createTurtleLoop (count, inst); :}
+			| ID:id '(' Params?:params ')'	{: RESULT = parser.getFactory().createTurtleCall (id, params); :}
+			;
+
+Bloc		::=	'{' ( Instruction:inst ';'  {: RESULT = inst; :} ) *:list '}' {: RESULT = list; :}
+			;
+
+Expr	::=	'(' Expr:e ')'				{: RESULT = e; :}
+			| Expr:e1 '+' Expr:e2		{: RESULT = parser.getFactory().createNodeAdd (e1, e2); :}
+			| Expr:e1 '-' Expr:e2		{: RESULT = parser.getFactory().createNodeSub (e1, e2); :}
+			| Expr:e1 '*' Expr:e2		{: RESULT = parser.getFactory().createNodeMult (e1, e2); :}
+			| Expr:e1 '/' Expr:e2		{: RESULT = parser.getFactory().createNodeDiv (e1, e2); :}
+			| '+' Expr:e				{: RESULT = parser.getFactory().createNodePlus (e); :} %prec UNARIES
+			| '-' Expr:e				{: RESULT = parser.getFactory().createNodeMinus (e); :} %prec UNARIES
+			| NUMBER:n					{: RESULT = parser.getFactory().createNodeConstantReal (n.doubleValue()); :}
+			| ID:id						{: RESULT = parser.getFactory().createNodeVariable (id); :}
+			| TEXT:v					{: RESULT = parser.getFactory().createNodeConstantString (v); :}
+			| PARAM:id					{: RESULT = parser.getFactory().createNodeVariable (id); :}
+			;
+
+Params	::=	Param:param	( ',' Param:p {: RESULT = p; :} ) *:list
+										{:
+											RESULT = parser.getFactory().createNodeBloc ();
+											RESULT.getChildren().add(param);
+											RESULT.getChildren().addAll(list);
+										:}
+		;
+
+Param	::=	Expr:Expr					{: RESULT = Expr; :}
+		;
+
+NUMBER	::=	`[0-9]+("."[0-9]+)?[eE][+-]?[0-9]+`
+		|	`[0-9]*"."[0-9]+([eE][+-]?[0-9]+)?`
+		|	`[0-9]+`
+		;
+
+PARAM	::=	`\$[0-9]`
+		;
+
+ID		::=	`[a-zA-Z][a-zA-Z_0-9]*`
+		;
+
+TEXT	::=	`\"[^\"]*\"`	{: RESULT = new String( zzBuffer, zzStartRead+1, zzMarkedPos-zzStartRead-2 ); :}
+		;
+
+terminal void SPACES, NL, COMMENT;
+
+SPACES	::= `[ \t\f]`
+		;
+
+NL		::=	`\r\n|\r|\n`
+		;
+
+COMMENT	::=	`"//".*`
+		|	"/*" ~ "*/"
+		;

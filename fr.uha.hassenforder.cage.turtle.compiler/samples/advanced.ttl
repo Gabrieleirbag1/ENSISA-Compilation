@@ -1,0 +1,36 @@
+square ()
+{
+	repeat 4 times {
+		move $1; turn 90;
+	};
+}
+
+hexagone ()
+{
+	repeat 6 times {
+		move $1; turn 60;
+	};
+}
+
+spirale ()
+{
+	s=$2;
+	repeat $1 times {
+		move s;	turn $4; s=s+$3;
+	};
+}
+
+frame 600, 400;
+square 50;
+pen off;
+goto 100, 100;
+pen on;
+hexagone 10;
+pen off;
+goto 200, 100;
+pen on;
+spirale 10, 2, 5, 30;
+pen off;
+goto 200, 200;
+pen on;
+spirale 10, 2, 1, 60;
