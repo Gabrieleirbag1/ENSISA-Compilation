@@ -1,0 +1,74 @@
+package fr.uha.hassenforder.cage.calculator;
+
+
+import java.util.TreeMap;
+import java.util.Map;
+
+
+option mode=ACTION;
+
+parser code {:
+
+    
+	private Map<String, Integer> values = new TreeMap<String, Integer> ();
+
+	public void setValue (String name, int value) {
+		values.put(name, Integer.valueOf (value));
+	}
+	
+	public int getValue (String name) {
+		int value = 0;
+		if (values.containsKey(name))
+			value = values.get(name).intValue();
+		return value;
+	}
+
+
+:}
+
+terminal EOLN;
+terminal String ID;
+terminal Integer NUMBER;
+terminal UNARIES;
+terminal __REGEXP_1__;
+terminal __REGEXP_2__;
+terminal __REGEXP_3__;
+terminal __REGEXP_4__;
+terminal __REGEXP_5__;
+terminal __REGEXP_6__;
+terminal __REGEXP_7__;
+
+nonterminal command;
+nonterminal commands;
+nonterminal Integer expr;
+nonterminal instr;
+
+precedence left __REGEXP_1__, __REGEXP_2__;
+precedence left __REGEXP_3__, __REGEXP_4__;
+precedence right UNARIES;
+
+
+start with commands;
+
+command		::=	instr EOLN 
+			;
+
+commands	::=	command * 
+			;
+
+expr		::=	expr:e1 __REGEXP_1__ expr:e2 {:  RESULT = e1 + e2;   :} 
+			|	expr:e1 __REGEXP_2__ expr:e2 {:  RESULT = e1 - e2;   :} 
+			|	expr:e1 __REGEXP_3__ expr:e2 {:  RESULT = e1 * e2;   :} 
+			|	expr:e1 __REGEXP_4__ expr:e2 {:  RESULT = e1 / e2;   :} 
+			|	__REGEXP_2__ expr:e {:  RESULT = - e;   :}  %prec UNARIES
+			|	__REGEXP_1__ expr:e {:  RESULT = + e;   :}  %prec UNARIES
+			|	__REGEXP_6__ expr:e __REGEXP_7__ {:  RESULT = e;   :} 
+			|	NUMBER:n {:  RESULT = n;   :} 
+			|	ID:n {:  RESULT = parser.getValue(n);   :} 
+			;
+
+instr		::=	
+			|	ID:n __REGEXP_5__ expr:e {:  parser.setValue (n, e);   :} 
+			|	expr:e {:  System.out.println (e);   :} 
+			;
+

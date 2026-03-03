@@ -1,0 +1,257 @@
+NFA is
+State 0
+  with epsilon in {4, 6, 8, 10, 12, 14, 16, 18, 30, 32, 37, 39, 50}
+State 1
+  with epsilon in {4, 6, 8, 10, 12, 14, 16, 18, 30, 32, 37, 39, 50}
+State 2
+  with epsilon in {45, 48, 50}
+State 3
+  with epsilon in {45, 48, 50}
+State 4
+  with 7 in {5}
+State[FINAL] 5
+State 6
+  with 8 in {7}
+State[FINAL] 7
+State 8
+  with 6 in {9}
+State[FINAL] 9
+State 10
+  with 9 in {11}
+State[FINAL] 11
+State 12
+  with 11 in {13}
+State[FINAL] 13
+State 14
+  with 4 in {15}
+State[FINAL] 15
+State 16
+  with 5 in {17}
+State[FINAL] 17
+State 18
+  with 1 in {19}
+State[FINAL] 19
+State 20
+  with 3 in {21}
+State 21
+  with epsilon in {22}
+State 22
+  with 2 in {23}
+State 23
+  with epsilon in {27}
+State 24
+  with 3 in {25}
+State 25
+  with epsilon in {27}
+State 26
+  with epsilon in {20, 24}
+State 27
+  with epsilon in {31}
+State 28
+  with 2 in {29}
+State 29
+  with epsilon in {31}
+State 30
+  with epsilon in {26, 28}
+State[FINAL] 31
+State 32
+  with 9 in {33}
+State 33
+  with 6 in {34}
+State[FINAL] 34
+State 35
+  with 10 in {36}
+State 36
+  with epsilon in {35, 38}
+State 37
+  with epsilon in {35}
+State[FINAL] 38
+State 39
+  with 12 in {40}
+State 40
+  with epsilon in {43}
+State 41
+  with 10 in {42}
+  with 12 in {42}
+State 42
+  with epsilon in {41, 44}
+State 43
+  with epsilon in {41, 44}
+State[FINAL] 44
+State 45
+  with 6 in {46}
+State 46
+  with 9 in {47}
+State[FINAL] 47
+State 48
+  with 0 in {49}
+  with 1 in {49}
+  with 2 in {49}
+  with 3 in {49}
+  with 4 in {49}
+  with 5 in {49}
+  with 6 in {49}
+  with 7 in {49}
+  with 8 in {49}
+  with 9 in {49}
+  with 10 in {49}
+  with 11 in {49}
+  with 12 in {49}
+State[FINAL] 49
+State 50
+  with 0 in {51}
+  with 1 in {51}
+  with 2 in {51}
+  with 3 in {51}
+  with 4 in {51}
+  with 5 in {51}
+  with 6 in {51}
+  with 7 in {51}
+  with 8 in {51}
+  with 9 in {51}
+  with 10 in {51}
+  with 11 in {51}
+  with 12 in {51}
+State[FINAL] 51
+
+
+DFA is
+State 0:
+  with 0 in 4
+  with 1 in 5
+  with 2 in 6
+  with 3 in 7
+  with 4 in 8
+  with 5 in 9
+  with 6 in 10
+  with 7 in 11
+  with 8 in 12
+  with 9 in 13
+  with 10 in 14
+  with 11 in 15
+  with 12 in 16
+State 1:
+  with 0 in 4
+  with 1 in 5
+  with 2 in 6
+  with 3 in 7
+  with 4 in 8
+  with 5 in 9
+  with 6 in 10
+  with 7 in 11
+  with 8 in 12
+  with 9 in 13
+  with 10 in 14
+  with 11 in 15
+  with 12 in 16
+State 2:
+  with 0 in 17
+  with 1 in 17
+  with 2 in 17
+  with 3 in 17
+  with 4 in 17
+  with 5 in 17
+  with 6 in 18
+  with 7 in 17
+  with 8 in 17
+  with 9 in 17
+  with 10 in 17
+  with 11 in 17
+  with 12 in 17
+State 3:
+  with 0 in 17
+  with 1 in 17
+  with 2 in 17
+  with 3 in 17
+  with 4 in 17
+  with 5 in 17
+  with 6 in 18
+  with 7 in 17
+  with 8 in 17
+  with 9 in 17
+  with 10 in 17
+  with 11 in 17
+  with 12 in 17
+State [FINAL] 4:
+State [FINAL] 5:
+State [FINAL] 6:
+State [FINAL] 7:
+  with 2 in 19
+State [FINAL] 8:
+State [FINAL] 9:
+State [FINAL] 10:
+State [FINAL] 11:
+State [FINAL] 12:
+State [FINAL] 13:
+  with 6 in 20
+State [FINAL] 14:
+  with 10 in 21
+State [FINAL] 15:
+State [FINAL] 16:
+  with 10 in 22
+  with 12 in 22
+State [FINAL] 17:
+State [FINAL] 18:
+  with 9 in 23
+State [FINAL] 19:
+State [FINAL] 20:
+State [FINAL] 21:
+  with 10 in 21
+State [FINAL] 22:
+  with 10 in 22
+  with 12 in 22
+State [FINAL] 23:
+
+
+Miniminal DFA is
+State 0:
+  with 0 in 2
+  with 1 in 3
+  with 2 in 4
+  with 3 in 5
+  with 4 in 6
+  with 5 in 7
+  with 6 in 8
+  with 7 in 9
+  with 8 in 10
+  with 9 in 11
+  with 10 in 12
+  with 11 in 13
+  with 12 in 14
+State 1:
+  with 0 in 3
+  with 1 in 3
+  with 2 in 3
+  with 3 in 3
+  with 4 in 3
+  with 5 in 3
+  with 6 in 15
+  with 7 in 3
+  with 8 in 3
+  with 9 in 3
+  with 10 in 3
+  with 11 in 3
+  with 12 in 3
+State [FINAL] 2:
+State [FINAL] 3:
+State [FINAL] 4:
+State [FINAL] 5:
+  with 2 in 4
+State [FINAL] 6:
+State [FINAL] 7:
+State [FINAL] 8:
+State [FINAL] 9:
+State [FINAL] 10:
+State [FINAL] 11:
+  with 6 in 16
+State [FINAL] 12:
+  with 10 in 12
+State [FINAL] 13:
+State [FINAL] 14:
+  with 10 in 14
+  with 12 in 14
+State [FINAL] 15:
+  with 9 in 17
+State [FINAL] 16:
+State [FINAL] 17:
+
