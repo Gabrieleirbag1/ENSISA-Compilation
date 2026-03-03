@@ -44,7 +44,7 @@ Instruction ::=											{: :}
 			|	ID:n '=' 	Expression:v				{: parser.getTable().setValue(n, v); :}
 			|	'avancer' 	Expression:v				{: parser.getTurtle().move(v); :}
 			|	'tourner' 	Expression:v				{: parser.getTurtle().turn(v); :}
-			|	'sauter' 	Expression:x Expression:y 	{: parser.getTurtle().go(x, y); :}
+			|	'sauter' 	Expression:x ',' Expression:y 	{: parser.getTurtle().go(x, y); :}
 			|	'lever' 					 			{: parser.getTurtle().up(); :}
 			|	'baisser'  					 			{: parser.getTurtle().down(); :}
 			;
@@ -54,6 +54,7 @@ Expression	::= Value:v						{: RESULT = v; :}
 			|	Expression:e1 '-' Expression:e2	{: RESULT = e1 - e2; :}
 			|	Expression:e1 '*' Expression:e2	{: RESULT = e1 * e2; :}
 			|	Expression:e1 '/' Expression:e2	{: RESULT = e1 / e2; :}
+			|	'-' Expression:e2				{: RESULT = -e2; :}
 			|	'(' Expression:e ')'			{: RESULT = e; :}
 			;
 
