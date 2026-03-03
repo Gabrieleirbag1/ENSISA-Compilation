@@ -1,0 +1,54 @@
+package fr.uha.hassenforder.cage.turtle.direct.reader.ttl;
+
+parser import code {:
+	import fr.uha.hassenforder.cage.turtle.direct.view.GraphicTurtle;
+	import fr.uha.hassenforder.cage.turtle.direct.SymbolTable;
+:}
+
+parser code {:
+    private GraphicTurtle turtle;
+    private SymbolTable table = null;
+
+    public SymbolTable getTable () {
+		if (table == null) table = new SymbolTable ();
+		return table;
+    }
+
+    public GraphicTurtle getTurtle () {
+		return turtle;
+    }
+
+    public void setTurtle (GraphicTurtle turtle) {
+		this.turtle = turtle;
+    }
+:}
+
+terminal	Integer INTEGER
+nonterminal 		Commandes, Definition;
+nonterminal			Instruction;
+
+start with Commandes;
+
+Commandes	::= Definition *
+			;
+
+Definition	::= Instruction:inst ';'
+			;
+
+Instruction ::=								{: :}
+			|	'avancer' INTEGER:v			{: getTurtle().move(v); :}
+			|	'tourner' INTEGER:v			{: getTurtle().move(v); :}
+			;
+
+
+terminal void SPACES, NL, COMMENT;
+
+SPACES	::= `[ \t\f]`
+		;
+
+NL		::=	`\r\n|\r|\n`
+		;
+
+COMMENT	::=	`"//".*`
+		|	"/*" ~ "*/"
+		;

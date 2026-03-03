@@ -1,0 +1,48 @@
+package fr.uha.hassenforder.cage.turtle.direct.reader.ttl;
+
+
+	import fr.uha.hassenforder.cage.turtle.direct.view.GraphicTurtle;
+	import fr.uha.hassenforder.cage.turtle.direct.SymbolTable;
+
+
+option mode=ACTION;
+
+parser code {:
+
+    private GraphicTurtle turtle;
+    private SymbolTable table = null;
+
+    public SymbolTable getTable () {
+		if (table == null) table = new SymbolTable ();
+		return table;
+    }
+
+    public GraphicTurtle getTurtle () {
+		return turtle;
+    }
+
+    public void setTurtle (GraphicTurtle turtle) {
+		this.turtle = turtle;
+    }
+
+:}
+
+terminal __REGEXP_1__;
+
+nonterminal Commandes;
+nonterminal Definition;
+nonterminal Instruction;
+
+
+
+start with Commandes;
+
+Commandes	::=	Definition * 
+			;
+
+Definition	::=	Instruction:inst __REGEXP_1__ 
+			;
+
+Instruction	::=	{:    :} 
+			;
+

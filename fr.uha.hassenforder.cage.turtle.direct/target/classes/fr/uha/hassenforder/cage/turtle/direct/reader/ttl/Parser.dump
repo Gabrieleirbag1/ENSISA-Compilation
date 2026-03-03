@@ -1,0 +1,105 @@
+===== Messages =====
+Info: Source newer, a parser will be generated 
+Info: Generate Terminal file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/ETerminal.java
+Info: Generate Nonterminal file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/ENonterminal.java
+Info: Generate Parser file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Parser.java
+Info: Generate Dump file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Parser.dump
+===== Terminals =====
+[0]error<Object> [1]EOF [2]OOA [3]__REGEXP_1__ 
+
+
+===== Non terminals =====
+[0]Commandes [1]Definition [2]Instruction [0]$START<Object> 
+[4]Definition$0_many 
+
+===== Productions =====
+[0] $START ::= Commandes EOF 
+[1] Commandes ::= Definition$0_many 
+[2] Definition ::= Instruction __REGEXP_1__ 
+[3] Instruction ::= 
+[4] Definition$0_many ::= 
+[5] Definition$0_many ::= Definition$0_many Definition 
+
+===== Viable Prefix Recognizer =====
+lalr_state [0]: {
+  [$START ::= (*) Commandes EOF , {EOF[1]}]
+  [Commandes ::= (*) Definition$0_many , {EOF[1]}]
+  [Definition$0_many ::= (*) , {EOF[1], __REGEXP_1__[3]}]
+  [Definition$0_many ::= (*) Definition$0_many Definition , {EOF[1], __REGEXP_1__[3]}]
+}
+transition on Definition$0_many to state [2]
+transition on Commandes to state [1]
+
+-------------------
+lalr_state [1]: {
+  [$START ::= Commandes (*) EOF , {EOF[1]}]
+}
+transition on EOF to state [3]
+
+-------------------
+lalr_state [2]: {
+  [$START ::= Commandes (*) EOF , {EOF[1]}]
+  [Definition$0_many ::= Definition$0_many (*) Definition , {EOF[1], __REGEXP_1__[3]}]
+  [Definition ::= (*) Instruction __REGEXP_1__ , {EOF[1], __REGEXP_1__[3]}]
+  [Instruction ::= (*) , {__REGEXP_1__[3]}]
+}
+transition on Instruction to state [5]
+transition on Definition to state [4]
+transition on EOF to state [3]
+
+-------------------
+lalr_state [3]: {
+  [$START ::= Commandes EOF (*) , {EOF[1]}]
+}
+
+-------------------
+lalr_state [4]: {
+  [Definition$0_many ::= Definition$0_many Definition (*) , {EOF[1], __REGEXP_1__[3]}]
+}
+
+-------------------
+lalr_state [5]: {
+  [Definition ::= Instruction (*) __REGEXP_1__ , {EOF[1], __REGEXP_1__[3]}]
+}
+transition on __REGEXP_1__ to state [6]
+
+-------------------
+lalr_state [6]: {
+  [Definition ::= Instruction __REGEXP_1__ (*) , {EOF[1], __REGEXP_1__[3]}]
+}
+
+-------------------
+-------- ACTION_TABLE --------
+From state #0
+ [default:ERROR]
+ [term 1:REDUCE(3)] [term 3:REDUCE(3)]
+From state #1
+ [default:ERROR]
+ [term 1:SHIFT(3)]
+From state #2
+ [default:ERROR]
+ [term 1:SHIFT(3)] [term 3:REDUCE(2)]
+From state #3
+ [default:ERROR]
+ [term 1:REDUCE(0)]
+From state #4
+ [default:ERROR]
+ [term 1:REDUCE(4)] [term 3:REDUCE(4)]
+From state #5
+ [default:ERROR]
+ [term 3:SHIFT(6)]
+From state #6
+ [default:ERROR]
+ [term 1:REDUCE(1)] [term 3:REDUCE(1)]
+------------------------------
+-------- REDUCE_TABLE --------
+From state #0
+ [non term 0->state 1] [non term 4->state 2]
+From state #1
+From state #2
+ [non term 1->state 4] [non term 2->state 5]
+From state #3
+From state #4
+From state #5
+From state #6
+-----------------------------

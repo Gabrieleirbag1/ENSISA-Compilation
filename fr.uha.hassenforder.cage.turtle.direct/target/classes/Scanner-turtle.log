@@ -1,0 +1,11 @@
+Reading "/home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/cage/Scanner-turtle.sage"
+Constructing NFA : 
+Writing code to "/home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/sage/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Scanner.java"
+Source newer, a parser will be generated
+Writing code to "/home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/sage/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Scanner.dump"
+Dumping tables to "/home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/sage/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Scanner.dump"
+37 states in NFA
+Converting NFA to DFA : 
+
+17 states before minimization, 11 states in minimized DFA
+Writing code to "/home/frigiel/Documents/VSCODE/Cours/ENSISA/cage.turtle/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/sage/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Scanner.java"

@@ -1,0 +1,94 @@
+package fr.uha.hassenforder.cage.turtle.direct.reader.ttl;
+
+parser import code {:
+	import fr.uha.hassenforder.cage.turtle.direct.view.GraphicTurtle;
+	import fr.uha.hassenforder.cage.turtle.direct.SymbolTable;
+:}
+
+parser code {:
+    private GraphicTurtle turtle;
+    private SymbolTable table = null;
+
+    public SymbolTable getTable () {
+		if (table == null) table = new SymbolTable ();
+		return table;
+    }
+
+    public GraphicTurtle getTurtle () {
+		return turtle;
+    }
+
+    public void setTurtle (GraphicTurtle turtle) {
+		this.turtle = turtle;
+    }
+:}
+
+terminal Double		NUMBER;
+terminal String		ID, TEXT;
+terminal 			UNARIES;
+
+nonterminal 		Commandes, Definition;
+nonterminal			Instruction;
+nonterminal Integer    Expr;
+
+precedence left '+', '-'; 
+precedence left '*', '/'; 
+precedence right UNARIES;
+
+start with Commandes;
+
+Commandes	::= Definition *
+			;
+
+Definition	::= Instruction:inst ';'
+			;
+
+Instruction ::=								{: :}
+			| 'frame' Expr:x ',' Expr:y		{: parser.getTurtle().frame (x, y); :}
+			| 'home'						{: parser.getTurtle().home (); :}
+			| 'north' Expr:p				{: parser.getTurtle().north (p); :}
+			| 'south' Expr:p				{: parser.getTurtle().south (p); :}
+			| 'east' Expr:p					{: parser.getTurtle().east (p); :}
+			| 'west' Expr:p					{: parser.getTurtle().west (p); :}
+			| 'pen' 'up'					{: parser.getTurtle().up (); :}
+			| 'pen' 'down'					{: parser.getTurtle().down (); :}
+			| 'goto' Expr:x ',' Expr:y		{: parser.getTurtle().go (x, y); :}
+			| 'shift' Expr:dx ',' Expr:dy	{: parser.getTurtle().shift (dx, dy);:}
+			| 'move' Expr:d					{: parser.getTurtle().move (d); :}
+			| 'turn' Expr:a					{: parser.getTurtle().turn (a); :}
+			| 'plot' TEXT:t					{: parser.getTurtle().plot (t); :}
+			| 'ink' Expr:i					{: parser.getTurtle().ink (i); :}
+			| ID:id '=' Expr:v				{: parser.getTable().setValue (id, v); :}
+			;
+
+Expr	::=	'(' Expr:e ')'				{: RESULT = e; :}
+			| Expr:e1 '+' Expr:e2		{: RESULT = e1 + e2; :}
+			| Expr:e1 '-' Expr:e2		{: RESULT = e1 - e2; :}
+			| Expr:e1 '*' Expr:e2		{: RESULT = e1 * e2; :}
+			| Expr:e1 '/' Expr:e2		{: RESULT = e1 / e2; :}
+			| '+' Expr:e				{: RESULT = + e; :} %prec UNARIES
+			| '-' Expr:e				{: RESULT = - e; :} %prec UNARIES
+			| NUMBER:n					{: RESULT = n.intValue(); :}
+			| ID:id						{: RESULT = parser.getTable().getValue(id); :}
+			;
+
+NUMBER	::=	`[0-9]+`
+		;
+
+ID		::=	`[a-zA-Z][a-zA-Z_0-9]*`
+		;
+
+TEXT	::=	`\"[^\"]*\"`	{: RESULT = new String( zzBuffer, zzStartRead+1, zzMarkedPos-zzStartRead-2 ); :}
+		;
+
+terminal void SPACES, NL, COMMENT;
+
+SPACES	::= `[ \t\f]`
+		;
+
+NL		::=	`\r\n|\r|\n`
+		;
+
+COMMENT	::=	`"//".*`
+		|	"/*" ~ "*/"
+		;
