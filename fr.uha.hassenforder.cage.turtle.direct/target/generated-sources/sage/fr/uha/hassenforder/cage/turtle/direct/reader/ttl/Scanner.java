@@ -69,8 +69,10 @@ public class Scanner implements IScanner {
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
     "\11\0\1\1\1\2\1\3\1\4\1\5\22\0\1\1"+
-    "\11\0\1\6\4\0\1\7\13\0\1\10\111\0\1\3"+
-    "\u01a2\0\2\3\326\0\u0100\3";
+    "\11\0\1\6\4\0\1\7\12\10\1\0\1\11\45\0"+
+    "\1\12\1\13\1\14\1\0\1\15\3\0\1\16\2\0"+
+    "\1\17\1\0\1\20\1\21\2\0\1\22\1\23\1\24"+
+    "\1\25\1\26\16\0\1\3\u01a2\0\2\3\326\0\u0100\3";
 
   private static int [] zzUnpackcmap_blocks() {
     int [] result = new int[1024];
@@ -97,11 +99,12 @@ public class Scanner implements IScanner {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\2\2\1\1\1\3\1\2\1\4\1\2"+
-    "\1\5";
+    "\2\0\1\1\2\2\1\1\1\3\1\4\5\1\1\2"+
+    "\1\5\1\2\5\0\1\6\14\0\1\7\4\0\1\10"+
+    "\1\0\1\11\1\12\1\13";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[11];
+    int [] result = new int[44];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -126,11 +129,15 @@ public class Scanner implements IScanner {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\11\0\22\0\22\0\33\0\44\0\22\0\55"+
-    "\0\22\0\66\0\22";
+    "\0\0\0\27\0\56\0\56\0\105\0\134\0\163\0\56"+
+    "\0\212\0\241\0\270\0\317\0\346\0\375\0\56\0\u0114"+
+    "\0\u012b\0\u0142\0\u0159\0\u0170\0\u0187\0\56\0\u019e\0\u01b5"+
+    "\0\u01cc\0\u01e3\0\u01fa\0\u0211\0\u0228\0\u023f\0\u0256\0\u026d"+
+    "\0\u0284\0\u029b\0\56\0\u02b2\0\u02c9\0\u02e0\0\u02f7\0\56"+
+    "\0\u030e\0\56\0\56\0\56";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[11];
+    int [] result = new int[44];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -154,11 +161,19 @@ public class Scanner implements IScanner {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\3\2\4\1\3\1\4\1\5\1\3\1\6\1\7"+
-    "\6\4\1\10\2\4\13\0\1\4\14\0\1\11\1\12"+
-    "\10\0\1\13\1\0\2\12\4\0\3\12";
+    "\1\10\1\11\1\12\3\3\1\13\3\3\1\14\1\15"+
+    "\2\3\6\4\1\16\20\4\31\0\1\4\32\0\1\17"+
+    "\1\20\27\0\1\7\44\0\1\21\12\0\1\22\31\0"+
+    "\1\23\23\0\1\24\35\0\1\25\14\0\1\26\17\0"+
+    "\2\20\4\0\21\20\12\0\1\27\32\0\1\30\36\0"+
+    "\1\31\25\0\1\32\26\0\1\33\21\0\1\34\31\0"+
+    "\1\35\20\0\1\36\35\0\1\37\24\0\1\40\20\0"+
+    "\1\41\35\0\1\42\25\0\1\43\21\0\1\44\31\0"+
+    "\1\45\23\0\1\46\26\0\1\47\33\0\1\50\21\0"+
+    "\1\51\33\0\1\52\26\0\1\53\26\0\1\54\4\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[63];
+    int [] result = new int[805];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -201,10 +216,11 @@ public class Scanner implements IScanner {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\2\11\2\1\1\11\1\1\1\11\1\1\1\11";
+    "\2\0\2\11\3\1\1\11\6\1\1\11\1\1\5\0"+
+    "\1\11\14\0\1\11\4\0\1\11\1\0\3\11";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[11];
+    int [] result = new int[44];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -757,27 +773,57 @@ public Region(int state) {
             { fallback();
             }
             // fall through
-          case 6: break;
+          case 12: break;
           case 2:
             { 
             }
             // fall through
-          case 7: break;
+          case 13: break;
           case 3:
+            { return symbol(ETerminal.INTEGER, Integer.parseInt(yytext()));
+            }
+            // fall through
+          case 14: break;
+          case 4:
             { return symbol(ETerminal.__REGEXP_1__);
             }
             // fall through
-          case 8: break;
-          case 4:
+          case 15: break;
+          case 5:
             { startRegion (COMMENT$State);
             }
             // fall through
-          case 9: break;
-          case 5:
+          case 16: break;
+          case 6:
             { endRegion ();
             }
             // fall through
-          case 10: break;
+          case 17: break;
+          case 7:
+            { return symbol(ETerminal.__REGEXP_5__);
+            }
+            // fall through
+          case 18: break;
+          case 8:
+            { return symbol(ETerminal.__REGEXP_4__);
+            }
+            // fall through
+          case 19: break;
+          case 9:
+            { return symbol(ETerminal.__REGEXP_2__);
+            }
+            // fall through
+          case 20: break;
+          case 10:
+            { return symbol(ETerminal.__REGEXP_6__);
+            }
+            // fall through
+          case 21: break;
+          case 11:
+            { return symbol(ETerminal.__REGEXP_3__);
+            }
+            // fall through
+          case 22: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

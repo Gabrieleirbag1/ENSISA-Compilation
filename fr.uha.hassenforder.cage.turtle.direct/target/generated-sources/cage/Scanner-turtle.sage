@@ -74,12 +74,18 @@ public Region(int state) {
 %}
 
 __REGEXP_1__ = ";"
-__REGEXP_2__ = [ \t\f]
-__REGEXP_3__ = \r\n|\r|\n
-__REGEXP_4__ = "//".*
-__REGEXP_5__ = "/*"
-__REGEXP_6__ = "*/"
-__REGEXP_7__ = [^]
+__REGEXP_2__ = "avancer"
+__REGEXP_3__ = "tourner"
+__REGEXP_4__ = "sauter"
+__REGEXP_5__ = "lever"
+__REGEXP_6__ = "baisser"
+__REGEXP_7__ = [0-9]+
+__REGEXP_8__ = [ \t\f]
+__REGEXP_9__ = \r\n|\r|\n
+__REGEXP_10__ = "//".*
+__REGEXP_11__ = "/*"
+__REGEXP_12__ = "*/"
+__REGEXP_13__ = [^]
 
 %state COMMENT$State
 
@@ -87,15 +93,21 @@ __REGEXP_7__ = [^]
 
 <YYINITIAL> {
   {__REGEXP_1__}		{ return symbol(ETerminal.__REGEXP_1__); }
-  {__REGEXP_2__}		{  }
-  {__REGEXP_3__}		{  }
-  {__REGEXP_5__}		{ startRegion (COMMENT$State); }
-  {__REGEXP_4__}		{  }
+  {__REGEXP_8__}		{  }
+  {__REGEXP_9__}		{  }
+  {__REGEXP_11__}		{ startRegion (COMMENT$State); }
+  {__REGEXP_5__}		{ return symbol(ETerminal.__REGEXP_5__); }
+  {__REGEXP_4__}		{ return symbol(ETerminal.__REGEXP_4__); }
+  {__REGEXP_2__}		{ return symbol(ETerminal.__REGEXP_2__); }
+  {__REGEXP_3__}		{ return symbol(ETerminal.__REGEXP_3__); }
+  {__REGEXP_6__}		{ return symbol(ETerminal.__REGEXP_6__); }
+  {__REGEXP_10__}		{  }
+  {__REGEXP_7__}		{ return symbol(ETerminal.INTEGER, Integer.parseInt(yytext())); }
 }
 
 <COMMENT$State> {
-  {__REGEXP_6__}		{ endRegion (); }
-  {__REGEXP_7__}		{ }
+  {__REGEXP_12__}		{ endRegion (); }
+  {__REGEXP_13__}		{ }
 }
 
 

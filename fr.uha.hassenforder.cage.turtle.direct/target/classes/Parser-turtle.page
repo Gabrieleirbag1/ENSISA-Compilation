@@ -27,7 +27,13 @@ parser code {:
 
 :}
 
+terminal Integer INTEGER;
 terminal __REGEXP_1__;
+terminal __REGEXP_2__;
+terminal __REGEXP_3__;
+terminal __REGEXP_4__;
+terminal __REGEXP_5__;
+terminal __REGEXP_6__;
 
 nonterminal Commandes;
 nonterminal Definition;
@@ -44,5 +50,10 @@ Definition	::=	Instruction:inst __REGEXP_1__
 			;
 
 Instruction	::=	{:    :} 
+			|	__REGEXP_2__ INTEGER:v {:  parser.getTurtle().move(v);   :} 
+			|	__REGEXP_3__ INTEGER:v {:  parser.getTurtle().move(v);   :} 
+			|	__REGEXP_4__ INTEGER:x INTEGER:y {:  parser.getTurtle().go(x, y);   :} 
+			|	__REGEXP_5__ {:  parser.getTurtle().up();   :} 
+			|	__REGEXP_6__ {:  parser.getTurtle().down();   :} 
 			;
 

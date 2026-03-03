@@ -23,7 +23,7 @@ parser code {:
     }
 :}
 
-terminal	Integer INTEGER
+terminal	Integer INTEGER;
 nonterminal 		Commandes, Definition;
 nonterminal			Instruction;
 
@@ -36,10 +36,15 @@ Definition	::= Instruction:inst ';'
 			;
 
 Instruction ::=								{: :}
-			|	'avancer' INTEGER:v			{: getTurtle().move(v); :}
-			|	'tourner' INTEGER:v			{: getTurtle().move(v); :}
+			|	'avancer' INTEGER:v			{: parser.getTurtle().move(v); :}
+			|	'tourner' INTEGER:v			{: parser.getTurtle().turn(v); :}
+			|	'sauter' INTEGER:x INTEGER:y {: parser.getTurtle().go(x, y); :}
+			|	'lever' 					 {: parser.getTurtle().up(); :}
+			|	'baisser'  					 {: parser.getTurtle().down(); :}
 			;
 
+INTEGER		::= `[0-9]+`
+			;
 
 terminal void SPACES, NL, COMMENT;
 
