@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>fr.uha.hassenforder</groupId>
+	<artifactId>cage.turtle.parent</artifactId>
+	<version>1.0.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Cage All Turtle Project</name>
+	<description>The turtle projet in my lab session</description>
+	<url>https://gitlab.cluster.ensisa.uha.fr/michel.hassenforder/fr.uha.hassenforder.cage.turtle</url>
+
+	<parent>
+		<groupId>fr.uha.cage</groupId>
+		<artifactId>cage.all-in-one</artifactId>
+		<version>1.0.2</version>
+		<relativePath />
+	</parent>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>https://opensource.org/licenses/MIT"</url>
+		</license>
+	</licenses>
+
+	<organization>
+		<name>Ensisa</name>
+		<url>http://www.ensisa.fr</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>hassenforder</id>
+			<name>Michel Hassenforder</name>
+			<email>Michel.Hassenforder@uha.fr</email>
+			<roles>
+				<role>founder</role>
+				<role>developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://gitlab.cluster.ensisa.uha.fr/michel.hassenforder/cage.turtle.git</connection>
+		<developerConnection>scm:git:https://gitlab.cluster.ensisa.uha.fr/michel.hassenforder/cage.turtle.git</developerConnection>
+		<url>https://gitlab.cluster.ensisa.uha.fr/michel.hassenforder/cage.turtle</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<jre.version>17</jre.version>
+		<plugin.logo>1.0.0</plugin.logo>
+		<plugin.page>1.0.2</plugin.page>
+		<plugin.sage>1.0.1</plugin.sage>
+		<plugin.cage>1.0.2</plugin.cage>
+		<plugin.helper>3.6.0</plugin.helper>
+		<plugin.compiler>3.14.0</plugin.compiler>
+		<plugin.install>3.1.2</plugin.install>
+		<plugin.jar>3.4.2</plugin.jar>
+		<plugin.junit>5.11.0-M2</plugin.junit>
+		<plugin.surefire>3.5.2</plugin.surefire>
+		<plugin.emf.common>2.42.0</plugin.emf.common>
+		<plugin.emf.ecore>2.39.0</plugin.emf.ecore>
+		<plugin.json>20240303</plugin.json>
+		<plugin.javafx>21</plugin.javafx>
+		<build.javafx>0.0.6</build.javafx>
+		<build.release>3.1.1</build.release>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>cage-repo</id>
+			<url>https://gitlab.cluster.ensisa.uha.fr/api/v4/projects/194/packages/maven</url>
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>gitlab-maven</id>
+			<url>https://gitlab.cluster.ensisa.uha.fr/api/v4/projects/200/packages/maven</url>
+		</repository>
+		<snapshotRepository>
+			<id>gitlab-maven</id>
+			<url>https://gitlab.cluster.ensisa.uha.fr/api/v4/projects/200/packages/maven</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<modules>
+		<module>fr.uha.hassenforder.cage.calculator</module>
+		<module>fr.uha.hassenforder.cage.turtle.lib</module>
+		<module>fr.uha.hassenforder.cage.turtle.direct</module>
+		<module>fr.uha.hassenforder.cage.turtle.interpreter</module>
+		<module>fr.uha.hassenforder.cage.turtle.compiler</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>fr.uha.hassenforder.logo</groupId>
+				<artifactId>logo</artifactId>
+				<version>${plugin.logo}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.emf</groupId>
+				<artifactId>org.eclipse.emf.common</artifactId>
+				<version>${plugin.emf.common}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.emf</groupId>
+				<artifactId>org.eclipse.emf.ecore</artifactId>
+				<version>${plugin.emf.ecore}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>${plugin.json}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-controls</artifactId>
+				<version>${plugin.javafx}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-fxml</artifactId>
+				<version>${plugin.javafx}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>${plugin.helper}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${plugin.compiler}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${plugin.jar}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>${plugin.install}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${plugin.surefire}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>${build.release}</version>
+					<configuration>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.openjfx</groupId>
+					<artifactId>javafx-maven-plugin</artifactId>
+					<version>${build.javafx}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>

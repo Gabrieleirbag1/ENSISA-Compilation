@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>fr.uha.hassenforder</groupId>
+    <artifactId>cage.turtle.lib</artifactId>
+    <version>1.0.2-SNAPSHOT</version>
+	
+	<name>Turtle library</name>
+	<description>Turtle AST library </description>
+
+	<parent>
+		<groupId>fr.uha.hassenforder</groupId>
+		<artifactId>cage.turtle.parent</artifactId>
+		<version>1.0.2-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+			    <executions>
+			        <execution>
+						<id>logo install</id>
+						<phase>clean</phase>
+			            <goals>
+			                <goal>install-file</goal>
+			            </goals>
+		                <configuration>
+							<file>lib/fr.uha.hassenforder.logo.jar</file>
+				            <groupId>fr.uha.hassenforder.logo</groupId>
+				            <artifactId>logo</artifactId>
+				            <version>1.0.0</version>
+				            <packaging>jar</packaging>
+		                </configuration>
+			        </execution>
+			    </executions>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<release>${jre.version}</release>
+				</configuration>
+			</plugin>
+        </plugins>
+    </build>
+</project>
