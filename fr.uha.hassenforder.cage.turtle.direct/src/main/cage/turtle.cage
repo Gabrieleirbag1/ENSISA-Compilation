@@ -23,9 +23,11 @@ parser code {:
     }
 :}
 
+terminal 	String ID;
 terminal	Integer INTEGER;
 nonterminal 		Commandes, Definition;
 nonterminal			Instruction;
+nonterminal Integer	Value;
 
 start with Commandes;
 
@@ -36,6 +38,7 @@ Definition	::= Instruction:inst ';'
 			;
 
 Instruction ::=								{: :}
+			|	ID:n '=' INTEGER:view		{: parser.getTable().setValue(n, v); :}
 			|	'avancer' INTEGER:v			{: parser.getTurtle().move(v); :}
 			|	'tourner' INTEGER:v			{: parser.getTurtle().turn(v); :}
 			|	'sauter' INTEGER:x INTEGER:y {: parser.getTurtle().go(x, y); :}
@@ -43,7 +46,14 @@ Instruction ::=								{: :}
 			|	'baisser'  					 {: parser.getTurtle().down(); :}
 			;
 
+Value		::= INTEGER:value				{: v; :}
+			|	ID:new						{: parser.getTable().getValue(n); :}
+			;
+
 INTEGER		::= `[0-9]+`
+			;
+
+ID			::= `[a-zA-Z_][a-zA-z0-9_]*`
 			;
 
 terminal void SPACES, NL, COMMENT;

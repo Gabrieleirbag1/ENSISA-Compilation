@@ -1,9 +1,0 @@
-Info: Source newer, a parser will be generated 
-Info: Delete file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/ETerminal.java
-Info: Delete file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/ENonterminal.java
-Info: Delete file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Parser.java
-Info: Delete file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Parser.dump
-Info: Generate Terminal file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/ETerminal.java
-Info: Generate Nonterminal file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/ENonterminal.java
-Info: Generate Parser file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Parser.java
-Info: Generate Dump file : /home/frigiel/Documents/VSCODE/Cours/ENSISA/ENSISA-Compilation/fr.uha.hassenforder.cage.turtle.direct/target/generated-sources/page/fr/uha/hassenforder/cage/turtle/direct/reader/ttl/Parser.dump
