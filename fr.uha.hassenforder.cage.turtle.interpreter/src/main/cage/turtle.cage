@@ -29,8 +29,13 @@ terminal 			UNARIES;
 
 nonterminal 		Commandes, Definition;
 nonterminal java.util.List<Node>    Bloc;
+nonterminal java.util.List<Node>    Params;
+nonterminal Node   Param;
 nonterminal Node    Instruction;
 nonterminal Node    Expr;
+nonterminal Node   FunctionBody;
+nonterminal Symbol		Declaration;
+nonterminal SymbolFunction		FunctionPrototype;
 
 precedence left '+', '-'; 
 precedence left '*', '/'; 
@@ -41,8 +46,25 @@ start with Commandes;
 Commandes	::= Definition *
 			;
 
-Definition	::= Instruction:inst ';'	{: parser.getContext().addGlobalInstruction(inst); :}
+Definition	::= Declaration:d';'	{: parser.getContext().addLocalSymbol(d); :}
+			|	Instruction:inst ';'	{: parser.getContext().addGlobalInstruction(inst); :}
+
 			;
+
+Declaration 	::= FunctionPrototype:f FunctionBody:b {: f.setCode(b); RESULT = f; :}
+				;
+
+FunctionPrototype 	::= 'fun' ID:id 	{: SymbolFunction f = parser.getFactory().createSymbolFunction(id); 
+                                            parser.getContext().getVista().push (f.getTable());
+                                            RESULT = f; 
+                                       :}
+                    ;
+
+FunctionBody 	::= Bloc:inst	{: 
+								parser.getContext().getVista().pop();
+								RESULT = parser.getFactory().createNodeBloc (inst); 
+							:}
+				;
 
 Instruction ::=								{: RESULT = null; :}
 			| 'frame' Expr:x ',' Expr:y		{: RESULT = parser.getFactory().createTurtleFrame (x, y); :}
@@ -63,9 +85,20 @@ Instruction ::=								{: RESULT = null; :}
 			| Bloc:b 						{: RESULT = parser.getFactory().createNodeBloc (b); :}
 			| 'repeat' Expr:count 'times'? Instruction:inst
 											{: RESULT = parser.getFactory().createTurtleLoop (count, inst); :}
+			| 'call' ID:name Params:inst	{: 
+												Node params = parser.getFactory().createNodeBloc(inst);
+												RESULT = parser.getFactory().createTurtleCall (name, params); 
+											:}
+			;
+
+Params		::= '{' ( Param:p ';' {: RESULT = p; :} ) *:list '}' {: RESULT = list; :}
+            ;
+
+Param		::= Expr:p 	{: RESULT = p; :}
 			;
 
 Bloc		::=	'{' ( Instruction:inst ';'  {: RESULT = inst; :} ) *:list '}' {: RESULT = list; :}
+			|	'begin' ( Instruction:inst ';'  {: RESULT = inst; :} ) *:list 'end' {: RESULT = list; :}
 			;
 
 Expr	::=	'(' Expr:e ')'				{: RESULT = e; :}
@@ -93,15 +126,15 @@ ID		::=	`[a-zA-Z][a-zA-Z_0-9]*`
 		;
 
 TEXT	::=	`\"[^\"]*\"`	{: RESULT = new String( zzBuffer, zzStartRead+1, zzMarkedPos-zzStartRead-2 ); :}
-		;
+		 ;
 
 terminal void SPACES, NL, COMMENT;
 
 SPACES	::= `[ \t\f]`
-		;
+		 ;
 
 NL		::=	`\r\n|\r|\n`
-		;
+		 ;
 
 COMMENT	::=	`"//".*`
 		|	"/*" ~ "*/"
