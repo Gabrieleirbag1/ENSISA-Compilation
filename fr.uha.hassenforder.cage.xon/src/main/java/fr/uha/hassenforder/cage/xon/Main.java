@@ -25,17 +25,19 @@ public class Main {
 		}
 	}
 
-	private File validateOutputFile (String filename) {
-		try {
-			File file = new File (filename);
-			File parent = file.getParentFile();
-			parent.mkdirs();
-			return file;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
+    private File validateOutputFile (String filename) {
+        try {
+            File file = new File (filename);
+            File parent = file.getParentFile();
+            if (parent != null) {
+                parent.mkdirs();
+            }
+            return file;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 	private Node read (String name) {
 		try {
@@ -90,7 +92,8 @@ public class Main {
 			if (argv.length == 1) {
 				name = argv[0];
 			} else {
-				name = "cage.turtle/fr.uha.hassenforder.cage.xon/test.txt";
+
+				name = "./fr.uha.hassenforder.cage.xon/test.txt";
 			}
 			Main main = new Main();
 			File file = new File(".");

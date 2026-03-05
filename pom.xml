@@ -94,6 +94,7 @@
 		<module>fr.uha.hassenforder.cage.turtle.direct</module>
 		<module>fr.uha.hassenforder.cage.turtle.interpreter</module>
 		<module>fr.uha.hassenforder.cage.turtle.compiler</module>
+		<module>fr.uha.hassenforder.cage.xon</module>
 	</modules>
 
 	<dependencyManagement>

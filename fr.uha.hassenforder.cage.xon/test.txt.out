@@ -1,0 +1,16 @@
+{
+   "third": [
+      "20",
+      "30",
+      {
+         "more": "with second value",
+         "again": "with one value"
+      }
+   ],
+   "fourth": {
+      "embeded": {"hello": "world"},
+      "two": "0"
+   },
+   "first": "value1",
+   "second": "10"
+}
