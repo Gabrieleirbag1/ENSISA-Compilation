@@ -1,0 +1,82 @@
+package fr.uha.hassenforder.cage.xon;
+
+parser import code {:
+import java.util.List;
+import fr.uha.hassenforder.cage.xon.model.xon.Node;
+import fr.uha.hassenforder.cage.xon.model.xon.NodeFactory;
+:}
+
+parser code {:
+    
+	private NodeFactory factory = null;
+
+	public NodeFactory getFactory () {
+		if (factory == null) {
+			factory = new NodeFactory ();
+		}
+		return factory;
+	}
+
+:}
+
+parser action code {:
+	public NodeFactory getFactory () {
+		return parser.getFactory();
+	}
+:}
+
+terminal String			STRING;
+   
+nonterminal Node		json, object, pair;
+nonterminal	Node		array, element;
+nonterminal	Node		value;
+nonterminal	List<Node>	members, elements;
+
+start with json;
+
+json		::=	object:o					{:
+												RESULT = getFactory ().createJsonNode(o);
+											:}
+			;
+			
+object		::= '{' members:list '}'		{:	RESULT = getFactory ().createObjectNode(list); :}
+			;
+
+members		::=	pair:f ( ',' pair:n {: RESULT = n; :} ) *: list
+											{:
+												list.add(0, f);
+												RESULT = list;
+											:}
+			;
+
+pair		::= STRING:n ':' value:v		{:	RESULT = getFactory ().createPairNode(n, v); :}
+			;
+
+value		::=	object:o					{:	RESULT = o; :}
+			|	array:a						{:	RESULT = a; :}
+			|	STRING:s					{:	RESULT = getFactory ().createStringNode(s); :}
+			;
+
+array		::=	'[' elements:list ']'		{:	RESULT = getFactory ().createArrayNode(list); :}
+			;
+
+elements	::=	element:f ( ',' element:n {: RESULT = n; :} ) *:list
+											{:
+												list.add(0, f);
+												RESULT = list;
+											:}
+			;
+
+element		::=	value:v						{:	RESULT = v; :}
+			;
+
+STRING	::=	`\"[^\"]*\"`	{: RESULT = new String( zzBuffer, zzStartRead+1, zzMarkedPos-zzStartRead-2 ); :}
+		;
+
+terminal void EOLN, WHITE;
+
+EOLN	::=	`\r\n|\r|\n`
+		;
+
+WHITE	::=	`[ \t\f]`
+		;
