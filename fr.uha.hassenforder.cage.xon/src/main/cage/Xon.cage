@@ -4,7 +4,6 @@ parser import code {:
 import java.util.List;
 import fr.uha.hassenforder.cage.xon.model.xon.Node;
 import fr.uha.hassenforder.cage.xon.model.xon.NodeFactory;
-import fr.uha.hassenforder.cage.xon.model.xon.NodeValue;
 :}
 
 parser code {:
@@ -81,14 +80,14 @@ element		::=	value:v						{:	RESULT = v; :}
 let		::=	STRING:n '=' Expression:v	{: RESULT = getFactory().createLetNode(n, v); :}
 		;
 
-Expression	::= STRING:v					{:	RESULT = new NodeValue(v); :}
-            |	Expression:e1 '+' Expression:e2	{: RESULT = NodeValue.add(e1, e2); :}
-            |	Expression:e1 '-' Expression:e2	{: RESULT = NodeValue.sub(e1, e2); :}
-            |	Expression:e1 '*' Expression:e2	{: RESULT = NodeValue.mult(e1, e2); :}
-            |	Expression:e1 '/' Expression:e2	{: RESULT = NodeValue.div(e1, e2); :}
+Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
+            |	Expression:e1 '+' Expression:e2	{: RESULT = getFactory().createAddNode(e1, e2); :}
+            |	Expression:e1 '-' Expression:e2	{: RESULT = getFactory().createSubNode(e1, e2); :}
+            |	Expression:e1 '*' Expression:e2	{: RESULT = getFactory().createMultNode(e1, e2); :}
+            |	Expression:e1 '/' Expression:e2	{: RESULT = getFactory().createDivNode(e1, e2); :}
             |	'(' Expression:e ')'			{: RESULT = e; :}
-            |	DOUBLE:d					{: RESULT = new NodeValue(d); :}
-            |	INTEGER:i					{: RESULT = new NodeValue(i); :}
+            |	DOUBLE:d					{: RESULT = getFactory().createRealNode(d); :}
+            |	INTEGER:i					{: RESULT = getFactory().createIntegerNode(i); :}
             ;
             
 
