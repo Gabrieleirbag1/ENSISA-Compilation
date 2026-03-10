@@ -26,11 +26,17 @@ parser action code {:
 :}
 
 terminal String			STRING;
+terminal Integer		INTEGER;
+terminal Double			DOUBLE;
    
 nonterminal Node		json, object, pair;
 nonterminal	Node		array, element;
 nonterminal	Node		value;
+nonterminal Node 		Expression;
 nonterminal	List<Node>	members, elements;
+
+precedence left '+', '-';
+precedence left '*', '/';
 
 start with json;
 
@@ -55,6 +61,8 @@ pair		::= STRING:n ':' value:v		{:	RESULT = getFactory ().createPairNode(n, v); 
 value		::=	object:o					{:	RESULT = o; :}
 			|	array:a						{:	RESULT = a; :}
 			|	STRING:s					{:	RESULT = getFactory ().createStringNode(s); :}
+			|	INTEGER:i					{:	RESULT = getFactory ().createIntegerNode(i); :}
+			|	DOUBLE:d					{:	RESULT = getFactory ().createDoubleNode(d); :}
 			;
 
 array		::=	'[' elements:list ']'		{:	RESULT = getFactory ().createArrayNode(list); :}
@@ -70,7 +78,27 @@ elements	::=	element:f ( ',' element:n {: RESULT = n; :} ) *:list
 element		::=	value:v						{:	RESULT = v; :}
 			;
 
+Expression	::= STRING:v					{: RESULT = v; :}
+			|	Expression:e1 '+' Expression:e2	{: RESULT = e1 + e2; :}
+			|	Expression:e1 '-' Expression:e2	{: RESULT = e1 - e2; :}
+			|	Expression:e1 '*' Expression:e2	{: RESULT = e1 * e2; :}
+			|	Expression:e1 '/' Expression:e2	{: RESULT = e1 / e2; :}
+			|	'-' Expression:e2				{: RESULT = -e2; :}
+			|	'(' Expression:e ')'			{: RESULT = e; :}
+			|	DOUBLE:d					{: RESULT = d; :}
+			|	INTEGER:i					{: RESULT = i; :}
+			;
+			
+
 STRING	::=	`\"[^\"]*\"`	{: RESULT = new String( zzBuffer, zzStartRead+1, zzMarkedPos-zzStartRead-2 ); :}
+		;
+
+INTEGER	::=	`[0-9]+`
+		;
+
+NUMBER	::=	`[0-9]+("."[0-9]+)?[eE][+-]?[0-9]+`
+		|	`[0-9]*"."[0-9]+([eE][+-]?[0-9]+)?`
+		|	`[0-9]+`
 		;
 
 terminal void EOLN, WHITE;
