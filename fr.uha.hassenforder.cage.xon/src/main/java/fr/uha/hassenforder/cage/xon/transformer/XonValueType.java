@@ -10,6 +10,7 @@ public enum XonValueType {
     TEXT,
     INTEGER,
     REAL,
+    BOOLEAN,
 
     NAME,
     ;    

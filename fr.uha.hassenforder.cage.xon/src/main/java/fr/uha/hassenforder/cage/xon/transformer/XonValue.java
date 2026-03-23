@@ -18,6 +18,7 @@ public class XonValue {
 	private String text = null;
 	private Integer integer = null;
 	private Double real = null;
+    private Boolean bool = null;
     
     public XonValue() {
     }
@@ -37,6 +38,12 @@ public class XonValue {
     public XonValue setText(String text) {
         this.type = XonValueType.TEXT;
         this.text = text;
+        return this;
+    }
+
+    public XonValue setBoolean(Boolean bool) {
+        this.type = XonValueType.BOOLEAN;
+        this.bool = bool;
         return this;
     }
 
@@ -94,6 +101,10 @@ public class XonValue {
     
     public Double getReal() {
         return real;
+    }
+
+    public Boolean getBoolean() {
+        return bool;
     }
 
     public Object getContent() {

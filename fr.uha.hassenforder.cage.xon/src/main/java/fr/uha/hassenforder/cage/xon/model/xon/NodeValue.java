@@ -5,6 +5,7 @@ public class NodeValue {
 	private String text = null;
 	private Integer integer = null;
 	private Double real = null;
+    private Boolean bool = null;
     
     public NodeValue(String text) {
         this.text = text;
@@ -18,6 +19,10 @@ public class NodeValue {
         this.real = real;
     }
 
+    public NodeValue(Boolean bool) {
+        this.bool = bool;
+    }
+
     public boolean isText() {
         return text != null;
     }
@@ -28,6 +33,10 @@ public class NodeValue {
     
     public boolean isReal() {
         return real != null;
+    }
+
+    public boolean isBoolean() {
+        return bool != null;
     }
     
     public String asText() {
@@ -49,6 +58,12 @@ public class NodeValue {
         if (integer != null) return integer.doubleValue();
         if (real != null) return real.doubleValue();  
         return 0.0;
+    }
+
+    public boolean asBoolean() {
+        if (text != null) return Boolean.parseBoolean(text);
+        if (bool != null) return bool.booleanValue();
+        return false;
     }
 
     public static NodeValue add(NodeValue left, NodeValue right) {
