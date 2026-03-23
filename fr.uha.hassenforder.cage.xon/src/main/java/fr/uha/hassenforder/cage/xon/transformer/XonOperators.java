@@ -20,7 +20,10 @@ public class XonOperators {
             return new XonValue().setText(left.getText() + right.getInteger().toString());
         } else if (left.getType() == XonValueType.TEXT && right.getType() == XonValueType.REAL) {
             return new XonValue().setText(left.getText() + right.getReal().toString());
-        } else {
+        } else if (left.getType() == XonValueType.BOOLEAN && right.getType() == XonValueType.BOOLEAN) {
+            return new XonValue().setText(left.getBoolean().toString() + right.getBoolean().toString());
+        }
+        else {
             throw new IllegalArgumentException("Incompatible types for addition ");
         }
     }
@@ -34,7 +37,10 @@ public class XonOperators {
             return new XonValue().setReal(left.getReal() - right.getInteger().doubleValue());
         } else if (left.getType() == XonValueType.INTEGER && right.getType() == XonValueType.REAL) {
             return new XonValue().setReal(left.getInteger().doubleValue() - right.getReal());
-        } else {
+        } else if (left.getType() == XonValueType.BOOLEAN && right.getType() == XonValueType.BOOLEAN) {
+            return new XonValue().setText(left.getBoolean().toString() + right.getBoolean().toString());
+        }
+        else {
             throw new IllegalArgumentException("Incompatible types for subtraction ");
         }
     }
@@ -48,7 +54,10 @@ public class XonOperators {
             return new XonValue().setReal(left.getReal() * right.getInteger().doubleValue());
         } else if (left.getType() == XonValueType.INTEGER && right.getType() == XonValueType.REAL) {
             return new XonValue().setReal(left.getInteger().doubleValue() * right.getReal());
-        } else {
+        } else if (left.getType() == XonValueType.BOOLEAN && right.getType() == XonValueType.BOOLEAN) {
+            return new XonValue().setText(left.getBoolean().toString() + right.getBoolean().toString());
+        }
+        else {
             throw new IllegalArgumentException("Incompatible types for multiplication ");
         }
     }
@@ -62,7 +71,10 @@ public class XonOperators {
             return new XonValue().setReal(left.getReal() / right.getInteger().doubleValue());
         } else if (left.getType() == XonValueType.INTEGER && right.getType() == XonValueType.REAL) {
             return new XonValue().setReal(left.getInteger().doubleValue() / right.getReal());
-        } else {
+        } else if (left.getType() == XonValueType.BOOLEAN && right.getType() == XonValueType.BOOLEAN) {
+            return new XonValue().setText(left.getBoolean().toString() + right.getBoolean().toString());
+        }
+        else {
             throw new IllegalArgumentException("Incompatible types for division ");
         }
     }
