@@ -27,7 +27,8 @@ parser action code {:
 terminal String			STRING;
 terminal Integer		INTEGER;
 terminal Double			DOUBLE;
-   
+terminal Boolean		BOOLEAN;   
+
 nonterminal Node		json, object, pair;
 nonterminal	Node		array, element, let;
 nonterminal	Node		value;
@@ -88,6 +89,7 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	'(' Expression:e ')'			{: RESULT = e; :}
             |	DOUBLE:d					{: RESULT = getFactory().createRealNode(d); :}
             |	INTEGER:i					{: RESULT = getFactory().createIntegerNode(i); :}
+            |	BOOLEAN:b					{: RESULT = getFactory().createBooleanNode(b); :}
             ;
             
 
@@ -100,6 +102,9 @@ INTEGER	::=	`[0-9]+`
 DOUBLE	::=	`[0-9]+("."[0-9]+)?[eE][+-]?[0-9]+`
         |	`[0-9]*"."[0-9]+([eE][+-]?[0-9]+)?`
         |	`[0-9]+`
+        ;
+
+BOOLEAN	::=	`true|false`
         ;
 
 terminal void EOLN, WHITE;

@@ -90,6 +90,11 @@ public class NodeFactory {
         return createConstantNode(nodeValue);
     }
 
+    public Node createBooleanNode(boolean value) {
+        NodeValue nodeValue = new NodeValue(Boolean.toString(value));
+        return createConstantNode(nodeValue);
+    }
+
     public Node createAddNode(Node left, Node right) {
         Node node = new Node();
         node.setType(NodeType.EXPR_ADD);
