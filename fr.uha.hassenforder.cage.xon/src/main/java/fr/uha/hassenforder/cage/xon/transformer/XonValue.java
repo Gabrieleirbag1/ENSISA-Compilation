@@ -123,6 +123,8 @@ public class XonValue {
             return integer;
         case REAL:
             return real;
+        case BOOLEAN:
+            return bool;
         default:
             throw new UnsupportedOperationException("Unimplemented method 'getContent'");
         }
@@ -139,6 +141,8 @@ public class XonValue {
             result.setReal(value.asReal());
         } else if (value.isText()) {
             result.setText(value.asText());
+        } else if (value.isBoolean()) {
+            result.setBoolean(value.asBoolean());
         } else {
             throw new UnsupportedOperationException("Unsupported value type in 'setValue': " + value);
         }

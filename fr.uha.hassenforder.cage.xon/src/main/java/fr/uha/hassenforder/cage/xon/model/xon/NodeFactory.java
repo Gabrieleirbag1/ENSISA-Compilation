@@ -91,12 +91,11 @@ public class NodeFactory {
     }
 
     public Node createBooleanNode(boolean value) {
-        NodeValue nodeValue = new NodeValue(Boolean.toString(value));
+        NodeValue nodeValue = new NodeValue(value);
         return createConstantNode(nodeValue);
     }
 
     public Node createAddNode(Node left, Node right) {
-        System.out.println("Creating subtraction node with left type " + left.getType() + " and right type " + right.getType());
         Node node = new Node();
         node.setType(NodeType.EXPR_ADD);
         node.addNode(left);
@@ -105,7 +104,6 @@ public class NodeFactory {
     }
 
     public Node createSubNode(Node left, Node right) {
-        System.out.println("Creating subtraction node with left type " + left.getType() + " and right type " + right.getType());
         Node node = new Node();
         node.setType(NodeType.EXPR_SUB);
         node.addNode(left);

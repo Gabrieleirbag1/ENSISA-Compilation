@@ -188,7 +188,12 @@ public class Xon2Json extends NodeVisitor {
 
     @Override
     public void visit_If(Node node) throws TransformerException{
-        setResult(null);
+        List<XonValue> values = visit_Children(node);
+        XonValue conditionExpression = values.get(0);
+        XonValue thenValue = values.get(1);
+        XonValue elseValue = values.get(2);
+
+        setResult(thenValue);
     }
 
     @Override
