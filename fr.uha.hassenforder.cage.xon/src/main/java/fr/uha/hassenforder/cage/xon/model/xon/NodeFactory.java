@@ -135,6 +135,54 @@ public class NodeFactory {
         return node;
     }
 
+    public Node createEqualsNode(Node left, Node right) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_EQUALS);
+        node.addNode(left);
+        node.addNode(right);
+        return node;
+    }
+
+    public Node createNotEqualsNode(Node left, Node right) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_NOT_EQUALS);
+        node.addNode(left);
+        node.addNode(right);
+        return node;
+    }
+
+    public Node createLessThanNode(Node left, Node right) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_LESS_THAN);
+        node.addNode(left);
+        node.addNode(right);
+        return node;
+    }
+
+    public Node createGreaterThanNode(Node left, Node right) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_GREATER_THAN);
+        node.addNode(left);
+        node.addNode(right);
+        return node;
+    }
+
+    public Node createLessThanOrEqualNode(Node left, Node right) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_LESS_THAN_OR_EQUAL);
+        node.addNode(left);
+        node.addNode(right);
+        return node;
+    }
+
+    public Node createGreaterThanOrEqualNode(Node left, Node right) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_GREATER_THAN_OR_EQUAL);
+        node.addNode(left);
+        node.addNode(right);
+        return node;
+    }
+
     public Node createIfNode(Node condition, Node thenBody, Node elseBody) {
         Node node = new Node();
         node.setType(NodeType.INSTR_IF);

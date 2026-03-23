@@ -16,7 +16,13 @@ public abstract class NodeVisitor implements INodeVisitor {
 		case EXPR_ADD :			visit_Add(node); break;
 		case EXPR_SUB :			visit_Sub(node); break;
 		case EXPR_MULTIPLY :	visit_Multiply(node); break;
-		case EXPR_DIVIDE :		visit_Divide(node); break;		
+		case EXPR_DIVIDE :		visit_Divide(node); break;
+		case EXPR_EQUALS :		visit_Equals(node); break;
+		case EXPR_NOT_EQUALS :	visit_NotEquals(node); break;
+		case EXPR_LESS_THAN :	visit_LessThan(node); break;	
+		case EXPR_GREATER_THAN :	visit_GreaterThan(node); break;
+		case EXPR_LESS_THAN_OR_EQUAL :	visit_LessThanOrEqual(node); break;
+		case EXPR_GREATER_THAN_OR_EQUAL :	visit_GreaterThanOrEqual(node);	
 		case EXPR_MODULO :		visit_Modulo(node); break;		
 		case EXPR_TERNARY :		visit_Ternary(node); break;		
 		case INSTR_IF :			visit_If(node); break;
@@ -42,6 +48,13 @@ public abstract class NodeVisitor implements INodeVisitor {
 	public abstract void visit_Sub(Node node);
 	public abstract void visit_Modulo(Node node);
 	public abstract void visit_Ternary(Node node);
+
+	public abstract void visit_Equals(Node node);
+	public abstract void visit_NotEquals(Node node);
+	public abstract void visit_LessThan(Node node);
+	public abstract void visit_GreaterThan(Node node);
+	public abstract void visit_LessThanOrEqual(Node node);
+	public abstract void visit_GreaterThanOrEqual(Node node);
 
 	public abstract void visit_Loop(Node node);
 	public abstract void visit_If(Node node);

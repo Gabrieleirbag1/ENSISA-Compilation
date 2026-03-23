@@ -174,6 +174,54 @@ public class Xon2Json extends NodeVisitor {
     }
 
     @Override
+    public void visit_Equals(Node node) throws TransformerException{
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.equals(leftValue, rightValue));
+    }
+
+    @Override
+    public void visit_NotEquals(Node node) throws TransformerException{
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.notEquals(leftValue, rightValue));
+    }
+
+    @Override
+    public void visit_LessThan(Node node) throws TransformerException{
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.lessThan(leftValue, rightValue));
+    }
+
+    @Override
+    public void visit_GreaterThan(Node node) throws TransformerException{
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.greaterThan(leftValue, rightValue));
+    }
+
+    @Override
+    public void visit_LessThanOrEqual(Node node) throws TransformerException{
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.lessThanOrEqual(leftValue, rightValue));
+    }
+
+    @Override
+    public void visit_GreaterThanOrEqual(Node node) throws TransformerException{
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.greaterThanOrEqual(leftValue, rightValue));
+    }
+
+    @Override
     public void visit_Modulo(Node node) throws TransformerException{
         List<XonValue> values = visit_Children(node);
         XonValue leftValue = values.get(0);
@@ -193,7 +241,16 @@ public class Xon2Json extends NodeVisitor {
         XonValue thenValue = values.get(1);
         XonValue elseValue = values.get(2);
         
-        setResult(thenValue);
+        if (conditionExpression.getType() != XonValueType.BOOLEAN) {
+            throw new TransformerException("Expected a boolean as condition but got: " + conditionExpression);
+        }
+
+        if ((Boolean) conditionExpression.getContent()) {
+            setResult(thenValue);
+        } else {
+            setResult(elseValue);
+        }
+
     }
 
     @Override

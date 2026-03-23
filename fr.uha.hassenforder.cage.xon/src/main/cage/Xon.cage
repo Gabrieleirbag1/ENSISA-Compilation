@@ -27,7 +27,8 @@ parser action code {:
 terminal String			STRING;
 terminal Integer		INTEGER;
 terminal Double			DOUBLE;
-terminal Boolean		BOOLEAN;   
+terminal Boolean		BOOLEAN;
+terminal				EQ, NEQ, LT, GT, LTE, GTE;   
 
 nonterminal Node		json, object, pair;
 nonterminal	Node		array, element, let;
@@ -36,8 +37,9 @@ nonterminal Node 	    Expression;
 nonterminal	Node		condition;
 nonterminal	List<Node>	members, elements;
 
-precedence left '+', '-'; 
-precedence left '*', '/'; 
+precedence left '+', '-';
+precedence left '*', '/';
+precedence left EQ, NEQ, LT, GT, LTE, GTE;
 
 start with json;
 
@@ -91,6 +93,12 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	Expression:e1 '-' Expression:e2	{: RESULT = getFactory().createSubNode(e1, e2); :}
             |	Expression:e1 '*' Expression:e2	{: RESULT = getFactory().createMultNode(e1, e2); :}
             |	Expression:e1 '/' Expression:e2	{: RESULT = getFactory().createDivNode(e1, e2); :}
+            |   Expression:e1 EQ Expression:e2	{: RESULT = getFactory().createEqualsNode(e1, e2); :}
+            |   Expression:e1 NEQ Expression:e2	{: RESULT = getFactory().createNotEqualsNode(e1, e2); :}
+            |   Expression:e1 LT Expression:e2	{: RESULT = getFactory().createLessThanNode(e1, e2); :}
+            |   Expression:e1 GT Expression:e2	{: RESULT = getFactory().createGreaterThanNode(e1, e2); :}
+            |   Expression:e1 LTE Expression:e2	{: RESULT = getFactory().createLessThanOrEqualNode(e1, e2); :}
+            |   Expression:e1 GTE Expression:e2	{: RESULT = getFactory().createGreaterThanOrEqualNode(e1, e2); :}
             |	'(' Expression:e ')'			{: RESULT = e; :}
             |	DOUBLE:d					{: RESULT = getFactory().createRealNode(d); :}
             |	INTEGER:i					{: RESULT = getFactory().createIntegerNode(i); :}
@@ -112,6 +120,24 @@ DOUBLE	::=	`[0-9]+("."[0-9]+)?[eE][+-]?[0-9]+`
 
 BOOLEAN ::= `true` | `false`
         ;
+
+EQ	::=	`==`
+	;
+
+NEQ	::=	`!=`
+	;
+
+LTE	::=	`<=`
+	;
+
+GTE	::=	`>=`
+	;
+
+LT	::=	`<`
+	;
+
+GT	::=	`>`
+	;
 
 terminal void EOLN, WHITE;
 
