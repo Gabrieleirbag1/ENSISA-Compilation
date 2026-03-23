@@ -32,7 +32,8 @@ terminal Boolean		BOOLEAN;
 nonterminal Node		json, object, pair;
 nonterminal	Node		array, element, let;
 nonterminal	Node		value;
-nonterminal Node 	Expression;
+nonterminal Node 	    Expression;
+nonterminal	Node		condition;
 nonterminal	List<Node>	members, elements;
 
 precedence left '+', '-'; 
@@ -81,6 +82,10 @@ element		::=	value:v						{:	RESULT = v; :}
 let		::=	STRING:n '=' Expression:v	{: RESULT = getFactory().createLetNode(n, v); :}
 		;
 
+condition   ::= 'if' Expression:cond 'then' Expression:thenExpr 'else' Expression:elseExpr
+            {: RESULT = getFactory().createIfNode(cond, thenExpr, elseExpr); :}
+            ;
+
 Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	Expression:e1 '+' Expression:e2	{: RESULT = getFactory().createAddNode(e1, e2); :}
             |	Expression:e1 '-' Expression:e2	{: RESULT = getFactory().createSubNode(e1, e2); :}
@@ -90,6 +95,7 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	DOUBLE:d					{: RESULT = getFactory().createRealNode(d); :}
             |	INTEGER:i					{: RESULT = getFactory().createIntegerNode(i); :}
             |	BOOLEAN:b					{: RESULT = getFactory().createBooleanNode(b); :}
+            |	condition:c					{: RESULT = c; :}
             ;
             
 

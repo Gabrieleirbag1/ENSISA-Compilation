@@ -192,7 +192,7 @@ public class Xon2Json extends NodeVisitor {
         XonValue conditionExpression = values.get(0);
         XonValue thenValue = values.get(1);
         XonValue elseValue = values.get(2);
-
+        
         setResult(thenValue);
     }
 
