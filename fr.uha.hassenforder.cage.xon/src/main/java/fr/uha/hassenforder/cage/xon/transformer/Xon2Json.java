@@ -143,12 +143,18 @@ public class Xon2Json extends NodeVisitor {
 
     @Override
     public void visit_Divide(Node node) throws TransformerException{
-        setResult(null);
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.divide(leftValue, rightValue));
     }
 
     @Override
     public void visit_Multiply(Node node) throws TransformerException{
-        setResult(null);
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.multiply(leftValue, rightValue));
     }
 
     @Override
@@ -161,12 +167,18 @@ public class Xon2Json extends NodeVisitor {
 
     @Override
     public void visit_Sub(Node node) throws TransformerException{
-        setResult(null);
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.substract(leftValue, rightValue));
     }
 
     @Override
     public void visit_Modulo(Node node) throws TransformerException{
-        setResult(null);
+        List<XonValue> values = visit_Children(node);
+        XonValue leftValue = values.get(0);
+        XonValue rightValue = values.get(1);
+        setResult(XonOperators.modulo(leftValue, rightValue));
     }
 
     @Override
