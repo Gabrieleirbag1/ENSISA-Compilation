@@ -22,7 +22,7 @@ public abstract class NodeVisitor implements INodeVisitor {
 		case EXPR_LESS_THAN :	visit_LessThan(node); break;	
 		case EXPR_GREATER_THAN :	visit_GreaterThan(node); break;
 		case EXPR_LESS_THAN_OR_EQUAL :	visit_LessThanOrEqual(node); break;
-		case EXPR_GREATER_THAN_OR_EQUAL :	visit_GreaterThanOrEqual(node);	
+		case EXPR_GREATER_THAN_OR_EQUAL :	visit_GreaterThanOrEqual(node); break;
 		case EXPR_MODULO :		visit_Modulo(node); break;		
 		case EXPR_TERNARY :		visit_Ternary(node); break;		
 		case INSTR_IF :			visit_If(node); break;
