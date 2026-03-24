@@ -13,6 +13,7 @@ public abstract class NodeVisitor implements INodeVisitor {
 		case CONSTANT :			visit_ConstantNode(node); break;
 		case VARIABLE :			visit_VariableNode(node); break;
 		case INSTR_LET :		visit_LetNode(node); break;
+		case INSTR_GET :		visit_GetNode(node); break;
 		case EXPR_ADD :			visit_Add(node); break;
 		case EXPR_SUB :			visit_Sub(node); break;
 		case EXPR_MULTIPLY :	visit_Multiply(node); break;
@@ -41,6 +42,7 @@ public abstract class NodeVisitor implements INodeVisitor {
 	public abstract void visit_VariableNode(Node node);
 
 	public abstract void visit_LetNode(Node node);
+	public abstract void visit_GetNode(Node node);
 
 	public abstract void visit_Divide(Node node);
 	public abstract void visit_Multiply(Node node);

@@ -24,5 +24,8 @@
     "eleventh" : if 1 != 1 then "1 is not equal to 1" else "1 is equal to 1",
     "twelveth" : if true == false then "true is equal to false" else "true is not equal to false",
     "thirteenth" : if 1 <= 2 then "1 is less or equal to 2" else "1 is not less or equal to 2",
-    "fourteenth" : if 1 >= 2 then "1 is greater or equal to 2" else "1 is not greater or equal to 2"
+    "fourteenth" : if 1 >= 2 then "1 is greater or equal to 2" else "1 is not greater or equal to 2",
+    "fifteenth" : if 1 < 2 then "1 is less than 2" else "1 is not less than 2",
+    let "test" = "1000",
+    "sal" : get "test"
 }

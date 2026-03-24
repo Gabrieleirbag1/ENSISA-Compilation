@@ -34,6 +34,7 @@ nonterminal	Node		array, element, let;
 nonterminal	Node		value;
 nonterminal Node 	    Expression;
 nonterminal	Node		condition;
+// nonterminal	Node		loop;
 nonterminal	List<Node>	members, elements;
 
 precedence left '+', '-';
@@ -81,12 +82,16 @@ element		::=	value:v						{:	RESULT = v; :}
 			|	let:l						{:	RESULT = l; :}
             ;
 
-let		::=	STRING:n '=' Expression:v	{: RESULT = getFactory().createLetNode(n, v); :}
+let		::=	'let' STRING:n '=' Expression:v	{: RESULT = getFactory().createLetNode(n, v); :}
 		;
 
 condition   ::= 'if' Expression:cond 'then' Expression:thenExpr 'else' Expression:elseExpr
             {: RESULT = getFactory().createIfNode(cond, thenExpr, elseExpr); :}
             ;
+
+// loop        ::= 'for' STRING:var 'in' Expression:iter 'do' elements:body
+//             {: RESULT = getFactory().createLoopNode(var, iter, body); :}
+//             ;
 
 Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	Expression:e1 '+' Expression:e2	{: RESULT = getFactory().createAddNode(e1, e2); :}
@@ -104,6 +109,8 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	INTEGER:i					{: RESULT = getFactory().createIntegerNode(i); :}
             |	BOOLEAN:b					{: RESULT = getFactory().createBooleanNode(b); :}
             |	condition:c					{: RESULT = c; :}
+            // |   loop:l						{: RESULT = l; :}
+            |   'get' STRING:name			{: RESULT = getFactory().createGetNode(name); :}
             ;
             
 
@@ -119,7 +126,7 @@ DOUBLE	::=	`[0-9]+("."[0-9]+)?[eE][+-]?[0-9]+`
 
 BOOLEAN ::= `true`  {: RESULT = Boolean.TRUE; :}
         | `false`   {: RESULT = Boolean.FALSE; :}
-        ;
+        ; 
 
 terminal void EOLN, WHITE;
 

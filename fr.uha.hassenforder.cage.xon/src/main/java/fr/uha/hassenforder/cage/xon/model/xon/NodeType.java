@@ -13,6 +13,7 @@ public enum NodeType {
 	VARIABLE,
 
 	INSTR_LET,
+	INSTR_GET,
 
 	EXPR_ADD,
 	EXPR_SUB,

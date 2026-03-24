@@ -130,6 +130,18 @@ public class Xon2Json extends NodeVisitor {
         setResult(null);
     }
 
+    @Override
+    public void visit_GetNode(Node node) {
+        // first node is variable name
+        Node variableNameNode = node.getChildren().get(0);
+        visit_Node(variableNameNode);
+        XonValue variableName = getResult();
+        if (variableName.getType() != XonValueType.TEXT) {
+            throw new TransformerException("Expected a text as variableName but got: " + variableName);
+        }
+        setResult(getValue(variableName.getText()));
+    }
+
     private List<XonValue> visit_Children(Node node) {
         List<XonValue> values = new java.util.ArrayList<XonValue>();
         for (Node child : node.getChildren()) {
@@ -255,7 +267,22 @@ public class Xon2Json extends NodeVisitor {
 
     @Override
     public void visit_Loop(Node node) throws TransformerException{
-        setResult(null);
+        // time to code this part !
+        List<XonValue> values = visit_Children(node);
+        XonValue conditionExpression = values.get(0);
+        XonValue bodyValue = values.get(1);
+        if (conditionExpression.getType() != XonValueType.BOOLEAN) {
+            throw new TransformerException("Expected a boolean as condition but got: " + conditionExpression);
+        }
+        while ((Boolean) conditionExpression.getContent()) {
+            visit_Node(node.getChildren().get(1));
+            values = visit_Children(node);
+            conditionExpression = values.get(0);
+            if (conditionExpression.getType() != XonValueType.BOOLEAN) {
+                throw new TransformerException("Expected a boolean as condition but got: " + conditionExpression);
+            }
+        }
+        setResult(bodyValue);
     }
 
 }

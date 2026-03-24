@@ -80,6 +80,11 @@ public class XonDumper extends NodeVisitor implements IPrinter {
     }
 
     @Override
+    public void visit_GetNode(Node node)  {
+        visit_AnyNode("GET", node, "GET");
+    }
+
+    @Override
     public void visit_Divide(Node node) throws DumpException{
         visit_AnyNode("DIVIDE", node, "DIVIDE");
     }
