@@ -1,4 +1,10 @@
 {
+   "fourteenth": "1 is not greater or equal to 2",
+   "thenth": "1 is not equal to 2",
+   "eleventh": "1 is equal to 1",
+   "thirteenth": "1 is less or equal to 2",
+   "second": true,
+   "sixth": "1 is greater than 0",
    "third": [
       "20",
       "30",
@@ -7,10 +13,14 @@
          "again": "with one value"
       }
    ],
+   "seventh": "1 is not greater than 2",
+   "ninth": "1 is not equal to 2",
+   "fifth": "yes",
    "fourth": {
       "embeded": {"hello": "world"},
       "two": "0"
    },
+   "twelveth": "true is not equal to false",
    "first": "value1",
-   "second": "10"
+   "height": "1 is equal to 1"
 }
