@@ -119,4 +119,34 @@ public class XonDumper extends NodeVisitor implements IPrinter {
         visit_AnyNode("IF", node, "IF");
     }
 
+    @Override
+    public void visit_Equals(Node node) throws DumpException {
+        visit_AnyNode("EQUALS", node, "EQUALS");
+    }
+
+    @Override
+    public void visit_NotEquals(Node node) throws DumpException {
+        visit_AnyNode("NOT_EQUALS", node, "NOT_EQUALS");
+    }
+
+    @Override
+    public void visit_LessThan(Node node) throws DumpException {
+        visit_AnyNode("LESS_THAN", node, "LESS_THAN");
+    }
+
+    @Override
+    public void visit_GreaterThan(Node node) throws DumpException {
+        visit_AnyNode("GREATER_THAN", node, "GREATER_THAN");
+    }
+
+    @Override
+    public void visit_LessThanOrEqual(Node node) throws DumpException {
+        visit_AnyNode("LESS_THAN_OR_EQUAL", node, "LESS_THAN_OR_EQUAL");
+    }
+
+    @Override
+    public void visit_GreaterThanOrEqual(Node node) throws DumpException {
+        visit_AnyNode("GREATER_THAN_OR_EQUAL", node, "GREATER_THAN_OR_EQUAL");
+    }
+
 }
