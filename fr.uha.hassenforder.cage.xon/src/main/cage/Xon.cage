@@ -83,13 +83,14 @@ element		::=	value:v						{:	RESULT = v; :}
             ;
 
 let		::=	'let' STRING:n '=' Expression:v	{: RESULT = getFactory().createLetNode(n, v); :}
+        |   STRING:n '=' Expression:v			{: RESULT = getFactory().createLetNode(n, v); :}
 		;
 
 condition   ::= 'if' Expression:cond 'then' Expression:thenExpr 'else' Expression:elseExpr
             {: RESULT = getFactory().createIfNode(cond, thenExpr, elseExpr); :}
             ;
 
-// loop        ::= 'for' STRING:var 'in' Expression:iter 'do' elements:body
+// loop        ::= 'for' STRING:var 'in' Expression:iter 'do' array:body
 //             {: RESULT = getFactory().createLoopNode(var, iter, body); :}
 //             ;
 
