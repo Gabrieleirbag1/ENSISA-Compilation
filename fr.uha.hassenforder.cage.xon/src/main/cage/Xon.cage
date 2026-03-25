@@ -90,9 +90,12 @@ condition   ::= 'if' Expression:cond 'then' Expression:thenExpr 'else' Expressio
             {: RESULT = getFactory().createIfNode(cond, thenExpr, elseExpr); :}
             ;
 
-loop        ::= 'for' STRING:var 'in' Expression:iter 'do' value:body
+loop        ::= 'for' STRING:var 'in' value:iter 'do' value:body
             {:
-                RESULT = getFactory().createLoopNode(var, iter,
+                Node iterNode = iter;
+                // If iter is an array, we can use it directly for iteration
+                // If iter is a simple expression (like an integer), we can use it for counting
+                RESULT = getFactory().createLoopNode(var, iterNode,
                     body.getType() == fr.uha.hassenforder.cage.xon.model.xon.NodeType.ARRAY
                         ? body.getChildren()
                         : java.util.Arrays.asList(body)

@@ -21,8 +21,8 @@
          "again": "with one value"
       }
    ],
+   "nirth": "1 is not equal to 2",
    "seventh": "1 is not greater than 2",
-   "ninth": "1 is not equal to 2",
    "fifth": "yes",
    "fourth": {
       "embeded": {"hello": "world"},
@@ -31,6 +31,11 @@
    "twelveth": "true is not equal to false",
    "fifteenth": "1 is less than 2",
    "first": "value1",
-   "heighteenth": 3,
+   "heighteenth": [
+      2,
+      3,
+      4,
+      "ktest1"
+   ],
    "height": "1 is equal to 1"
 }

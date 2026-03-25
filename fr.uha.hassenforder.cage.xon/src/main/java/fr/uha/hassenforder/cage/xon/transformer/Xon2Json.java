@@ -265,42 +265,98 @@ public class Xon2Json extends NodeVisitor {
 
     }
 
-    @Override
-    public void visit_Loop(Node node) throws TransformerException {
-        // Child 0: variable name (stored but not automatically managed by loop)
-        // Child 1: iteration count (Expression node)
-        Node countNode = node.getChildren().get(1);
-        visit_Node(countNode);
-        XonValue countValue = getResult();
-
-        // Validate count is an integer
-        if (countValue.getType() != XonValueType.INTEGER) {
-            throw new TransformerException("Loop count must be an integer, got: " + countValue.getType());
-        }
-        int count = (Integer) countValue.getContent();
-
-        // Child 2: body (LIST node containing statements)
-        Node bodyNode = node.getChildren().get(2);
-
-        // Execute loop N times
-        XonValue lastResult = null;
-        for (int iteration = 0; iteration < count; iteration++) {
-            visit_Node(bodyNode);
-            XonValue bodyResult = getResult();
-
-            // If the body is a LIST, get the last element as the result
-            if (bodyResult != null && bodyResult.getType() == XonValueType.LIST) {
-                List<XonValue> statements = bodyResult.getList();
-                if (!statements.isEmpty()) {
-                    lastResult = statements.get(statements.size() - 1);
-                }
-            } else {
-                lastResult = bodyResult;
+    private XonValue extractLastResult(XonValue result) {
+        if (result != null && result.getType() == XonValueType.LIST) {
+            List<XonValue> statements = result.getList();
+            if (!statements.isEmpty()) {
+                return statements.get(statements.size() - 1);
             }
         }
+        return result;
+    }
 
-        // Return result of last iteration
-        setResult(lastResult);
+    private XonValue convertJsonToXonValue(Object jsonElement) throws TransformerException {
+        if (jsonElement instanceof Integer) {
+            return new XonValue().setInteger((Integer) jsonElement);
+        } else if (jsonElement instanceof Double) {
+            return new XonValue().setReal((Double) jsonElement);
+        } else if (jsonElement instanceof String) {
+            return new XonValue().setText((String) jsonElement);
+        } else if (jsonElement instanceof Boolean) {
+            return new XonValue().setBoolean((Boolean) jsonElement);
+        } else if (jsonElement instanceof JSONObject) {
+            return new XonValue().setObject((JSONObject) jsonElement);
+        } else if (jsonElement instanceof JSONArray) {
+            return new XonValue().setArray((JSONArray) jsonElement);
+        } else if (jsonElement == JSONObject.NULL) {
+            throw new TransformerException("Cannot iterate over null value");
+        } else {
+            throw new TransformerException(
+                "Unsupported array element type: " + jsonElement.getClass().getName()
+            );
+        }
+    }
+
+    @Override
+    public void visit_Loop(Node node) throws TransformerException {
+        // Child 0: Extract loop variable name
+        Node varNameNode = node.getChildren().get(0);
+        visit_Node(varNameNode);
+        XonValue varNameValue = getResult();
+        String loopVarName = varNameValue.getText();
+
+        // Child 1: Evaluate iteration expression
+        Node iterNode = node.getChildren().get(1);
+        visit_Node(iterNode);
+        XonValue iterValue = getResult();
+
+        // Child 2: Loop body
+        Node bodyNode = node.getChildren().get(2);
+
+        List<XonValue> allResults = new java.util.ArrayList<>();
+
+        // MODE 1: INTEGER - counting mode
+        if (iterValue.getType() == XonValueType.INTEGER) {
+            int count = (Integer) iterValue.getContent();
+            for (int i = 0; i < count; i++) {
+                visit_Node(bodyNode);
+                XonValue iterResult = extractLastResult(getResult());
+                if (iterResult != null) {
+                    allResults.add(iterResult);
+                }
+            }
+        }
+        // MODE 2: ARRAY - iteration mode
+        else if (iterValue.getType() == XonValueType.ARRAY) {
+            JSONArray array = iterValue.getArray();
+            for (int i = 0; i < array.length(); i++) {
+                // Convert array element to XonValue
+                Object element = array.get(i);
+                XonValue elementValue = convertJsonToXonValue(element);
+
+                // Set loop variable to current element
+                setValue(loopVarName, elementValue);
+
+                // Execute body
+                visit_Node(bodyNode);
+                XonValue iterResult = extractLastResult(getResult());
+                if (iterResult != null) {
+                    allResults.add(iterResult);
+                }
+            }
+        }
+        else {
+            throw new TransformerException(
+                "Loop iteration value must be INTEGER or ARRAY, got: " + iterValue.getType()
+            );
+        }
+
+        // Return array containing all iteration results
+        JSONArray resultArray = new JSONArray();
+        for (XonValue val : allResults) {
+            resultArray.put(val.getContent());
+        }
+        setResult(new XonValue().setArray(resultArray));
     }
 
 }

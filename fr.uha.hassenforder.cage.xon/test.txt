@@ -19,7 +19,7 @@
     "sixth" : if 1 > 0 then "1 is greater than 0" else "1 is not greater than 0",
     "seventh" : if 1 > 2 then "1 is greater than 2" else "1 is not greater than 2",
     "height" : if 1 == 1 then "1 is equal to 1" else "1 is not equal to 1",
-    "ninth" : if 1 == 2 then "1 is equal to 2" else "1 is not equal to 2",
+    "nirth" : if 1 == 2 then "1 is equal to 2" else "1 is not equal to 2",
     "thenth" : if 1 != 2 then "1 is not equal to 2" else "1 is equal to 2",
     "eleventh" : if 1 != 1 then "1 is not equal to 1" else "1 is equal to 1",
     "twelveth" : if true == false then "true is equal to false" else "true is not equal to false",
@@ -31,5 +31,5 @@
     "sixteenth" : get "test",
     "seventeenth" : [1, 2, 3, 4, get "test"],
     let "i" = 0,
-    "heighteenth" : for "i" in 3 do ["i" = get "i" + 1, get "i"]
+    "heighteenth" : for "i" in [1, 2, 3, "ktest"] do ["i" = get "i" + 1, get "i"]
 }
