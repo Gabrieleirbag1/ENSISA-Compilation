@@ -26,6 +26,10 @@
     "thirteenth" : if 1 <= 2 then "1 is less or equal to 2" else "1 is not less or equal to 2",
     "fourteenth" : if 1 >= 2 then "1 is greater or equal to 2" else "1 is not greater or equal to 2",
     "fifteenth" : if 1 < 2 then "1 is less than 2" else "1 is not less than 2",
-    let "test" = "1000",
-    "sal" : get "test"
+    let "test" = 1000,
+    "test" = 1200,
+    "sixteenth" : get "test",
+    "seventeenth" : [1, 2, 3, 4, get "test"],
+    let "i" = 0,
+    "heighteenth" : for "i" in 3 do ["i" = get "i" + 1, get "i"]
 }

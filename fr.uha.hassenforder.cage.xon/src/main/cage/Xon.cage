@@ -34,7 +34,7 @@ nonterminal	Node		array, element, let;
 nonterminal	Node		value;
 nonterminal Node 	    Expression;
 nonterminal	Node		condition;
-// nonterminal	Node		loop;
+nonterminal	Node		loop;
 nonterminal	List<Node>	members, elements;
 
 precedence left '+', '-';
@@ -90,9 +90,15 @@ condition   ::= 'if' Expression:cond 'then' Expression:thenExpr 'else' Expressio
             {: RESULT = getFactory().createIfNode(cond, thenExpr, elseExpr); :}
             ;
 
-// loop        ::= 'for' STRING:var 'in' Expression:iter 'do' array:body
-//             {: RESULT = getFactory().createLoopNode(var, iter, body); :}
-//             ;
+loop        ::= 'for' STRING:var 'in' Expression:iter 'do' value:body
+            {:
+                RESULT = getFactory().createLoopNode(var, iter,
+                    body.getType() == fr.uha.hassenforder.cage.xon.model.xon.NodeType.ARRAY
+                        ? body.getChildren()
+                        : java.util.Arrays.asList(body)
+                );
+            :}
+            ;
 
 Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	Expression:e1 '+' Expression:e2	{: RESULT = getFactory().createAddNode(e1, e2); :}
@@ -110,7 +116,7 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	INTEGER:i					{: RESULT = getFactory().createIntegerNode(i); :}
             |	BOOLEAN:b					{: RESULT = getFactory().createBooleanNode(b); :}
             |	condition:c					{: RESULT = c; :}
-            // |   loop:l						{: RESULT = l; :}
+            |   loop:l						{: RESULT = l; :}
             |   'get' STRING:name			{: RESULT = getFactory().createGetNode(name); :}
             ;
             

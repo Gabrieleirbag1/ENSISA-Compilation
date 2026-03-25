@@ -266,23 +266,41 @@ public class Xon2Json extends NodeVisitor {
     }
 
     @Override
-    public void visit_Loop(Node node) throws TransformerException{
-        // time to code this part !
-        List<XonValue> values = visit_Children(node);
-        XonValue conditionExpression = values.get(0);
-        XonValue bodyValue = values.get(1);
-        if (conditionExpression.getType() != XonValueType.BOOLEAN) {
-            throw new TransformerException("Expected a boolean as condition but got: " + conditionExpression);
+    public void visit_Loop(Node node) throws TransformerException {
+        // Child 0: variable name (stored but not automatically managed by loop)
+        // Child 1: iteration count (Expression node)
+        Node countNode = node.getChildren().get(1);
+        visit_Node(countNode);
+        XonValue countValue = getResult();
+
+        // Validate count is an integer
+        if (countValue.getType() != XonValueType.INTEGER) {
+            throw new TransformerException("Loop count must be an integer, got: " + countValue.getType());
         }
-        while ((Boolean) conditionExpression.getContent()) {
-            visit_Node(node.getChildren().get(1));
-            values = visit_Children(node);
-            conditionExpression = values.get(0);
-            if (conditionExpression.getType() != XonValueType.BOOLEAN) {
-                throw new TransformerException("Expected a boolean as condition but got: " + conditionExpression);
+        int count = (Integer) countValue.getContent();
+
+        // Child 2: body (LIST node containing statements)
+        Node bodyNode = node.getChildren().get(2);
+
+        // Execute loop N times
+        XonValue lastResult = null;
+        for (int iteration = 0; iteration < count; iteration++) {
+            visit_Node(bodyNode);
+            XonValue bodyResult = getResult();
+
+            // If the body is a LIST, get the last element as the result
+            if (bodyResult != null && bodyResult.getType() == XonValueType.LIST) {
+                List<XonValue> statements = bodyResult.getList();
+                if (!statements.isEmpty()) {
+                    lastResult = statements.get(statements.size() - 1);
+                }
+            } else {
+                lastResult = bodyResult;
             }
         }
-        setResult(bodyValue);
+
+        // Return result of last iteration
+        setResult(lastResult);
     }
 
 }
