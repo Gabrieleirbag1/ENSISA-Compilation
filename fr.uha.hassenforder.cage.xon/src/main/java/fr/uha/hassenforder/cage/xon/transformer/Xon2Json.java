@@ -359,4 +359,35 @@ public class Xon2Json extends NodeVisitor {
         setResult(new XonValue().setArray(resultArray));
     }
 
+    @Override
+    public void visit_While(Node node) throws TransformerException {
+        // Child 0: Evaluate condition expression
+        Node conditionNode = node.getChildren().get(0);
+        Node bodyNode = node.getChildren().get(1);
+
+        List<XonValue> allResults = new java.util.ArrayList<>();
+
+        while (true) {
+            visit_Node(conditionNode);
+            XonValue conditionValue = getResult();
+            if (conditionValue.getType() != XonValueType.BOOLEAN) {
+                throw new TransformerException("Expected a boolean as condition but got: " + conditionValue);
+            }
+            if (! (Boolean) conditionValue.getContent()) {
+                break;
+            }
+            visit_Node(bodyNode);
+            XonValue iterResult = extractLastResult(getResult());
+            if (iterResult != null) {
+                allResults.add(iterResult);
+            }
+        }
+
+        // Return array containing all iteration results
+        JSONArray resultArray = new JSONArray();
+        for (XonValue val : allResults) {
+            resultArray.put(val.getContent());
+        }
+        setResult(new XonValue().setArray(resultArray));
+    }
 }

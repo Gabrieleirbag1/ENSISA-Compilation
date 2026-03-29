@@ -120,6 +120,11 @@ public class XonDumper extends NodeVisitor implements IPrinter {
     }
 
     @Override
+    public void visit_While(Node node) throws DumpException{
+        visit_AnyNode("WHILE", node, "WHILE");
+    }
+
+    @Override
     public void visit_If(Node node) {
         visit_AnyNode("IF", node, "IF");
     }

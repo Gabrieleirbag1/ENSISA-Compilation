@@ -28,6 +28,7 @@ public abstract class NodeVisitor implements INodeVisitor {
 		case EXPR_TERNARY :		visit_Ternary(node); break;		
 		case INSTR_IF :			visit_If(node); break;
 		case INSTR_LOOP :		visit_Loop(node); break;
+		case INSTR_WHILE :		visit_While(node); break;
 		}
 	}
 
@@ -59,6 +60,7 @@ public abstract class NodeVisitor implements INodeVisitor {
 	public abstract void visit_GreaterThanOrEqual(Node node);
 
 	public abstract void visit_Loop(Node node);
+	public abstract void visit_While(Node node);
 	public abstract void visit_If(Node node);
 
 }

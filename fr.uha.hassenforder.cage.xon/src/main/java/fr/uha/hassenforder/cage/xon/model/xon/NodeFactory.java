@@ -213,4 +213,15 @@ public class NodeFactory {
         return node;
     }
 
+    public Node createWhileNode(Node condition, List<Node> body) {
+        Node node = new Node();
+        node.setType(NodeType.INSTR_WHILE);
+        Node bodyNode = new Node();
+        bodyNode.setType(NodeType.LIST);
+        bodyNode.addNodes(body);
+        node.addNode(condition);
+        node.addNode(bodyNode);
+        return node;
+    }
+
 }

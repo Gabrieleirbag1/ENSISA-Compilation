@@ -101,6 +101,14 @@ loop        ::= 'for' STRING:var 'in' value:iter 'do' value:body
                         : java.util.Arrays.asList(body)
                 );
             :}
+            |   'while' Expression:cond 'do' value:body
+            {:
+                RESULT = getFactory().createWhileNode(cond,
+                                    body.getType() == fr.uha.hassenforder.cage.xon.model.xon.NodeType.ARRAY
+                        ? body.getChildren()
+                        : java.util.Arrays.asList(body)
+                ); 
+            :}
             ;
 
 Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}

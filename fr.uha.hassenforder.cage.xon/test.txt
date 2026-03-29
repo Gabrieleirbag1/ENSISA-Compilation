@@ -30,6 +30,7 @@
     "test" = 1200,
     "sixteenth" : get "test",
     "seventeenth" : [1, 2, 3, 4, get "test"],
-    let "i" = 0,
-    "heighteenth" : for "i" in [1, 2, 3, "ktest"] do ["i" = get "i" + 1, get "i"]
+    "heighteenth" : for "var" in [1, 2, 3, "ktest"] do [get "var"],
+    let "j" = 0,
+    "nineteenth" : while get "j" < 5 do ["j" = get "j" + 1, get "j"]
 }

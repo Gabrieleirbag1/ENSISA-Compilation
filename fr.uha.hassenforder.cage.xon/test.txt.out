@@ -1,6 +1,13 @@
 {
    "fourteenth": "1 is not greater or equal to 2",
    "sixteenth": 1200,
+   "nineteenth": [
+      1,
+      2,
+      3,
+      4,
+      5
+   ],
    "thenth": "1 is not equal to 2",
    "eleventh": "1 is equal to 1",
    "thirteenth": "1 is less or equal to 2",
@@ -32,10 +39,10 @@
    "fifteenth": "1 is less than 2",
    "first": "value1",
    "heighteenth": [
+      1,
       2,
       3,
-      4,
-      "ktest1"
+      "ktest"
    ],
    "height": "1 is equal to 1"
 }

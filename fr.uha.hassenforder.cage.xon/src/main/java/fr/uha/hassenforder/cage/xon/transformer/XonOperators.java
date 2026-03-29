@@ -129,7 +129,16 @@ public class XonOperators {
             return new XonValue().setBoolean(left.getReal() < right.getInteger().doubleValue());
         } else if (left.getType() == XonValueType.INTEGER && right.getType() == XonValueType.REAL) {
             return new XonValue().setBoolean(left.getInteger().doubleValue() < right.getReal());
-        } else {
+        } else if (left.getType() == XonValueType.TEXT && right.getType() == XonValueType.INTEGER) {
+            return new XonValue().setBoolean(left.getText().compareTo(right.getInteger().toString()) < 0);
+        } else if (left.getType() == XonValueType.TEXT && right.getType() == XonValueType.REAL) {
+            return new XonValue().setBoolean(left.getText().compareTo(right.getReal().toString()) < 0);
+        } else if (left.getType() == XonValueType.INTEGER && right.getType() == XonValueType.TEXT) {
+            return new XonValue().setBoolean(left.getInteger().toString().compareTo(right.getText()) < 0);
+        } else if (left.getType() == XonValueType.REAL && right.getType() == XonValueType.TEXT) {
+            return new XonValue().setBoolean(left.getReal().toString().compareTo(right.getText()) < 0);
+        }
+        else {
             throw new IllegalArgumentException("Incompatible types for less than comparison ");
         }
     }
