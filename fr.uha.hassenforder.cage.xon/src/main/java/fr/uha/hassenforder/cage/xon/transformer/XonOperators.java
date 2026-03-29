@@ -79,6 +79,16 @@ public class XonOperators {
         }
     }
 
+    static public XonValue negate(XonValue value) throws TransformerException {
+        if (value.getType() == XonValueType.INTEGER) {
+            return new XonValue().setInteger(-value.getInteger());
+        } else if (value.getType() == XonValueType.REAL) {
+            return new XonValue().setReal(-value.getReal());
+        } else {
+            throw new IllegalArgumentException("Cannot negate type: " + value.getType());
+        }
+    }
+
     static public XonValue modulo(XonValue left, XonValue right) throws TransformerException {
         if (left.getType() == XonValueType.INTEGER && right.getType() == XonValueType.INTEGER) {
             return new XonValue().setInteger(left.getInteger() % right.getInteger());

@@ -172,17 +172,28 @@ public class Xon2Json extends NodeVisitor {
     @Override
     public void visit_Add(Node node) throws TransformerException{
         List<XonValue> values = visit_Children(node);
-        XonValue leftValue = values.get(0);
-        XonValue rightValue = values.get(1);
-        setResult(XonOperators.addition(leftValue, rightValue));
+        if (values.size() == 1) {
+            // Unary plus: just return the value as-is
+            setResult(values.get(0));
+        } else {
+            XonValue leftValue = values.get(0);
+            XonValue rightValue = values.get(1);
+            setResult(XonOperators.addition(leftValue, rightValue));
+        }
     }
 
     @Override
     public void visit_Sub(Node node) throws TransformerException{
         List<XonValue> values = visit_Children(node);
-        XonValue leftValue = values.get(0);
-        XonValue rightValue = values.get(1);
-        setResult(XonOperators.substract(leftValue, rightValue));
+        if (values.size() == 1) {
+            // Unary minus: negate the value
+            XonValue operand = values.get(0);
+            setResult(XonOperators.negate(operand));
+        } else {
+            XonValue leftValue = values.get(0);
+            XonValue rightValue = values.get(1);
+            setResult(XonOperators.substract(leftValue, rightValue));
+        }
     }
 
     @Override
@@ -299,23 +310,19 @@ public class Xon2Json extends NodeVisitor {
 
     @Override
     public void visit_Loop(Node node) throws TransformerException {
-        // Child 0: Extract loop variable name
         Node varNameNode = node.getChildren().get(0);
         visit_Node(varNameNode);
         XonValue varNameValue = getResult();
         String loopVarName = varNameValue.getText();
 
-        // Child 1: Evaluate iteration expression
         Node iterNode = node.getChildren().get(1);
         visit_Node(iterNode);
         XonValue iterValue = getResult();
 
-        // Child 2: Loop body
         Node bodyNode = node.getChildren().get(2);
 
         List<XonValue> allResults = new java.util.ArrayList<>();
 
-        // MODE 1: INTEGER - counting mode
         if (iterValue.getType() == XonValueType.INTEGER) {
             int count = (Integer) iterValue.getContent();
             for (int i = 0; i < count; i++) {
@@ -326,18 +333,14 @@ public class Xon2Json extends NodeVisitor {
                 }
             }
         }
-        // MODE 2: ARRAY - iteration mode
         else if (iterValue.getType() == XonValueType.ARRAY) {
             JSONArray array = iterValue.getArray();
             for (int i = 0; i < array.length(); i++) {
-                // Convert array element to XonValue
                 Object element = array.get(i);
                 XonValue elementValue = convertJsonToXonValue(element);
 
-                // Set loop variable to current element
                 setValue(loopVarName, elementValue);
 
-                // Execute body
                 visit_Node(bodyNode);
                 XonValue iterResult = extractLastResult(getResult());
                 if (iterResult != null) {
@@ -361,7 +364,6 @@ public class Xon2Json extends NodeVisitor {
 
     @Override
     public void visit_While(Node node) throws TransformerException {
-        // Child 0: Evaluate condition expression
         Node conditionNode = node.getChildren().get(0);
         Node bodyNode = node.getChildren().get(1);
 
@@ -383,7 +385,6 @@ public class Xon2Json extends NodeVisitor {
             }
         }
 
-        // Return array containing all iteration results
         JSONArray resultArray = new JSONArray();
         for (XonValue val : allResults) {
             resultArray.put(val.getContent());

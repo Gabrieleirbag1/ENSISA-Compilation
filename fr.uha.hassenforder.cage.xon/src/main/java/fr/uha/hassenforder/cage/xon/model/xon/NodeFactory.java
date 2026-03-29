@@ -127,6 +127,20 @@ public class NodeFactory {
         return node;
     }
 
+    public Node createNodePlus(Node operand) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_ADD);
+        node.addNode(operand);
+        return node;
+    }
+
+    public Node createNodeMinus(Node operand) {
+        Node node = new Node();
+        node.setType(NodeType.EXPR_SUB);
+        node.addNode(operand);
+        return node;
+    }
+
     public Node createModNode(Node left, Node right) {
         Node node = new Node();
         node.setType(NodeType.EXPR_MODULO);

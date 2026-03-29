@@ -28,6 +28,7 @@ terminal String			STRING;
 terminal Integer		INTEGER;
 terminal Double			DOUBLE;
 terminal Boolean		BOOLEAN;   
+terminal			UNARIES;
 
 nonterminal Node		json, object, pair;
 nonterminal	Node		array, element, let;
@@ -42,6 +43,7 @@ precedence left '*', '/';
 precedence left '%';
 precedence left '==', '!=';
 precedence left '<', '>', '<=', '>=';
+precedence right UNARIES;
 
 start with json;
 
@@ -124,6 +126,8 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |   Expression:e1 '<=' Expression:e2	{: RESULT = getFactory().createLessThanOrEqualNode(e1, e2); :}
             |   Expression:e1 '>=' Expression:e2	{: RESULT = getFactory().createGreaterThanOrEqualNode(e1, e2); :}
             |	'(' Expression:e ')'			{: RESULT = e; :}
+            |	'-'	Expression:e			{: RESULT = getFactory().createNodeMinus(e); :} %prec UNARIES
+		    |	'+'	Expression:e			{: RESULT = getFactory().createNodePlus(e); :} %prec UNARIES
             |	DOUBLE:d					{: RESULT = getFactory().createRealNode(d); :}
             |	INTEGER:i					{: RESULT = getFactory().createIntegerNode(i); :}
             |	BOOLEAN:b					{: RESULT = getFactory().createBooleanNode(b); :}
