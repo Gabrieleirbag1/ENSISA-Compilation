@@ -39,6 +39,7 @@ nonterminal	List<Node>	members, elements;
 
 precedence left '+', '-';
 precedence left '*', '/';
+precedence left '%';
 precedence left '==', '!=';
 precedence left '<', '>', '<=', '>=';
 
@@ -64,7 +65,6 @@ pair		::= STRING:n ':' value:v		{:	RESULT = getFactory ().createPairNode(n, v); 
             ;
 
 value		::=	object:o					{:	RESULT = o; :}
-            |	array:a						{:	RESULT = a; :}
             |	Expression:e				{:	RESULT = e; :}
             ;
 
@@ -116,6 +116,7 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	Expression:e1 '-' Expression:e2	{: RESULT = getFactory().createSubNode(e1, e2); :}
             |	Expression:e1 '*' Expression:e2	{: RESULT = getFactory().createMultNode(e1, e2); :}
             |	Expression:e1 '/' Expression:e2	{: RESULT = getFactory().createDivNode(e1, e2); :}
+            |   Expression:e1 '%' Expression:e2	{: RESULT = getFactory().createModNode(e1, e2); :}
             |   Expression:e1 '==' Expression:e2	{: RESULT = getFactory().createEqualsNode(e1, e2); :}
             |   Expression:e1 '!=' Expression:e2	{: RESULT = getFactory().createNotEqualsNode(e1, e2); :}
             |   Expression:e1 '<' Expression:e2	{: RESULT = getFactory().createLessThanNode(e1, e2); :}
@@ -128,6 +129,7 @@ Expression	::= STRING:v					{:	RESULT = getFactory().createStringNode(v); :}
             |	BOOLEAN:b					{: RESULT = getFactory().createBooleanNode(b); :}
             |	condition:c					{: RESULT = c; :}
             |   loop:l						{: RESULT = l; :}
+            |   array:a						{: RESULT = a; :}
             |   'get' STRING:name			{: RESULT = getFactory().createGetNode(name); :}
             ;
             

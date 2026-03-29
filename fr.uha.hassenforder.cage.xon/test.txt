@@ -30,7 +30,11 @@
     "test" = 1200,
     "sixteenth" : get "test",
     "seventeenth" : [1, 2, 3, 4, get "test"],
+    let "list" = [1, 2, 3, 4, 5],
     "heighteenth" : for "var" in [1, 2, 3, "ktest"] do [get "var"],
     let "j" = 0,
-    "nineteenth" : while get "j" < 5 do ["j" = get "j" + 1, get "j"]
+    "nineteenth" : while get "j" < 5 do ["j" = get "j" + 1, get "j"],
+    "twentieth" : for "var" in get "list" do [get "var"],
+    "twentyfirst" : for "var" in get "list" do [if (get "var" - 2) > 0 then get "var" else get "var" * 100],
+    "twentysecond" : 14 % 5
 }
